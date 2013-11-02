@@ -1,0 +1,32 @@
+html {
+background-image:url(background.png);background-repeat:repeat-x;  
+}
+
+body{
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width:400px;
+  // height: 100%;
+  margin: auto;
+  border:thin solid gray;
+  background-color: white;
+  padding: 50px;
+  margin-top:20px;
+} 
+ 
+a {
+
+  margin-left:20px;
+  border: thin solid gray;
+  padding: 10px;
+  width:100%;
+  text-decoration:none;
+  color: #70b6f8;
+  font-weight:bold;
+}
+
+#links {
+  margin-top:30px;
+}
