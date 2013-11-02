@@ -8,9 +8,9 @@ echo "<h3>myFilesStorage</h3>";
 function renderFile( $filename ){
   
   echo "<tr>";
-  echo '<td><a href="?page=prog&flashstate=filesStorage_del&file='.$filename.'">del</a></td>';
+  echo '<td><a href="?page=prog&action=filesStorage_del&file='.$filename.'">del</a></td>';
   echo '<td>'.$filename.'</td>';
-  echo '<td><a href="?page=prog&flashstate=burn&file='.$filename.'">burn</a></td>';  
+  echo '<td><a href="?page=prog&action=burn&file='.$filename.'">burn</a></td>';  
   echo "</tr>";
 
 }
@@ -40,12 +40,12 @@ displayFiles($fileStorage);
     
 ?>
 <p>
-You find all deleted files in <a href="?page=prog&flashstate=trash">trash</a>
+You find all deleted files in <a href="?page=prog&action=trash">trash</a>
 
 <p>
 Upload a new File:
 
-<form action="?page=prog&flashstate=filesStorage_load" method="post"
+<form action="?page=prog&action=filesStorage_load" method="post"
 enctype="multipart/form-data">
 <label for="file">Filename:</label>
 <input type="file" name="file" id="file"><br>

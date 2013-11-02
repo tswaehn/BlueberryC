@@ -24,6 +24,6 @@ if (isset($url_file)){
 
 ?>
 
-<form action="?page=prog&flashstate=filesStorage" method="post">
+<form action="?page=prog&action=filesStorage" method="post">
 <input type="submit" name="submit" value="Done">
 </form>

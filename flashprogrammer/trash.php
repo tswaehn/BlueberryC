@@ -8,7 +8,7 @@ function renderFile( $filename ){
   
   echo "<tr>";
   echo '<td>'.$filename.'</td>';
-  echo '<td><a href="?page=prog&flashstate=trash_restore&file='.$filename.'">restore</a></td>';  
+  echo '<td><a href="?page=prog&action=trash_restore&file='.$filename.'">restore</a></td>';  
   echo "</tr>";
 
 }

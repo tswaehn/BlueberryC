@@ -17,6 +17,7 @@
         <td><a href="?page=prog">flashprogrammer</a></td>
 	<td><a href="?page=controls">controls</a></td>
 	<td><a href="?page=about">about</a></td>
+	<td><a href="?page=scriptmaster">test</a></td>
 	</tr>
       </table>
     
@@ -24,8 +25,14 @@
 
     <div id="content">
       <?php
+	
+	date_default_timezone_set('Europe/London');
+	
 	extract( $_GET, EXTR_PREFIX_ALL, "url" );
 	extract( $_POST, EXTR_PREFIX_ALL, "url" );
+	
+	
+	
 	if (!isset($url_page)){
 	  $page='';
 	} else {
@@ -38,6 +45,8 @@
 	    case "prog": include( './flashprogrammer/index.php'); break;
 	    case "controls": include( './controls/index.php' );break;
 	    case "about": include( './about/index.php' );break;
+	    case "scriptmaster": include( './scriptmaster/index.php' );break;
+	    
 	  
 	    default: echo "select a page";
 	  }

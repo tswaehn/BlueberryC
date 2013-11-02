@@ -1,13 +1,13 @@
 
 <?php
 
-  if (!isset($url_flashstate)){
-    $flashstate='';
+  if (!isset($url_action)){
+    $action='';
   } else {
-    $flashstate=$url_flashstate;
+    $action=$url_action;
   }
 
-  switch ($flashstate){
+  switch ($action){
     case 'select': include('./flashprogrammer/selectFile.php');break;
     case 'burn': include( './flashprogrammer/burn.php');break;
     

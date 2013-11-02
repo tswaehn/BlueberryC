@@ -1,9 +1,0 @@
-
-avrdude: AVR device initialized and ready to accept instructions
-
-Reading | ################################################## | 100% 0.00s
-
-avrdude: Device signature = 0x1e9705
-avrdude: reading flash memory:
-
-Reading | ############

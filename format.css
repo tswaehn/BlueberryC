@@ -70,7 +70,7 @@ li {
 
 #menu a {
 	margin-left:10px;
-	margin-right:10px;
+	margin-right:0px;
 	color: white;
 	border: solid 1px #90d6f8;
 	background: #70b6f8;
@@ -90,3 +90,4 @@ li {
 	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 }
+
