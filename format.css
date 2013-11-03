@@ -1,93 +1,141 @@
 html {
-background-image:url(background.png);background-repeat:repeat-x;  
+  background-image:url(background.png);background-repeat:repeat-x;  
+  margin:0;
+  padding:0;
 }
 
 body {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  width:800px;
+  margin:0;
+  padding:0;
+  
+  //top: 0px;
+  //right: 0px;
+  //bottom: 0px;
+  //left: 0px;
+  //width:90%;
   // height: 100%;
-  margin: auto;
-  border:thin solid gray;
-  background-color: white;
-  padding: 50px;
-  margin-top:20px;
-
-  color: #828282;
+  //margin: auto;
+  //border:thin solid gray;
+  //background-color: white;
+    
+  //color: #828282;
 } 
-
-#header{
-    border: thin solid gray;
-    padding : 20px;
-    margin-bottom: 20px;
-    background-image:url(Electronics.png);
-    background-repeat:no-repeat;
-    background-color:green;
-    color:white;
-    text-shadow: 0px 0px 10px #000
-}
-
-#menu{
-  border: thin dashed #d5d5d5;
-  padding : 20px;
-  margin-bottom: 20px;
-}
-
-
-#content {
-  border:thin dotted #d5d5d5;
-  padding:20px;
- 
-}
 
 a {
 
-  margin-right:20px;
+  //margin:10px;
   //border: thin solid gray;
-  padding: 10px;
-  width:100%;
+  //padding: 10px;
+  //width:100%;
   text-decoration:none;
   color: #70b6f8;
   font-weight:bold;
 }
 
-td {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top:5px;
-    padding-bottom:5px;
+
+
+#frame {
+  background-color:white;
+  border:thin solid gray;
+  width:1000px;
+  margin:0 auto;
+  margin-top:5px;
+  height:95%;
 }
 
-li {
-    padding-top:10px;
-    padding-bottom:10px;
+#apps {
+  border: thin dashed #d5d5d5;
+  width:150px;
+  height:100%;
+  overflow:hidden;
+  float:left;
+}
+#apps2{
+  overflow:scroll;
+  width:170px;
+  height:120%;
+}
+
+#main {
+  overflow:hidden;
+  width:830px;
+  height:100%;
+  overflow:hidden;
+  float:right;
+}
+  #title {
+    color: #fafafa;
+    background-color:green;
+    border: thin solid #d5d5d5;
+    
+    height:100px;
+    overflow:hidden;
+    text-shadow: 0px 0px 10px red;
+    
+    background-image:url(Electronics.png);
+    background-repeat:no-repeat;
+  }
+
+  #menu {
+    
+  }
   
+  #menu ul {
+      list-style:none;
+  }
+  
+  #menu li {
+      display:inline;
+  }
+  
+  
+  #menu a {
+	  padding:5px;
+	  color: white;
+	  border: solid 1px #90d6f8;
+	  background: #70b6f8;
+	  background: -webkit-gradient(linear, left top, left bottom, from(#70b6f8), to(#90d6f8));
+	  background: -moz-linear-gradient(top,  #70b6f8,  #90d6f8);
+	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#70b6f8', endColorstr='#90d6f8');
+  }
+  
+  #menu a:hover {
+	  background: #f47c20;
+	  background: -webkit-gradient(linear, left top, left bottom, from(#5096f8), to(#70b6f8));
+	  background: -moz-linear-gradient(top,  #5096f8,  #70b6f8);
+	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5096f8', endColorstr='#70b6f8');
+  }
+  #menu a:active {
+	  color: #fcd3a5;
+	  background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+	  background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+  }
+
+  #header {
+    height:150px;
+  }
+  
+  #content {
+    height:calc(100% - 150px - 10px);
+    overflow-y:scroll;
+  }
+  
+#apps a {
+  padding:20px;
 }
 
-
-
-#menu a {
-	margin-left:10px;
-	margin-right:0px;
-	color: white;
-	border: solid 1px #90d6f8;
-	background: #70b6f8;
-	background: -webkit-gradient(linear, left top, left bottom, from(#70b6f8), to(#90d6f8));
-	background: -moz-linear-gradient(top,  #70b6f8,  #90d6f8);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#70b6f8', endColorstr='#90d6f8');
-}
-#menu a:hover {
-	background: #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#5096f8), to(#70b6f8));
-	background: -moz-linear-gradient(top,  #5096f8,  #70b6f8);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5096f8', endColorstr='#70b6f8');
-}
-#menu a:active {
-	color: #fcd3a5;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
-	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+#apps tr {
+  height:30px;
+  text-align:right;
 }
 
+#debugx {
+  background-color:yellow;
+  border:thin solid red;
+}
+
+#log {
+  border: dashed gray;
+  min-height:100px;
+}

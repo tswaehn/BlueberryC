@@ -16,7 +16,7 @@ cmdFile="/tmp/cmd.txt"
 internFile="/tmp/any.log"
 
 #redirect anything to log
-debug=0
+debug=1
 if [ $debug -eq 0 ]
 then
   exec &>$internFile
@@ -68,7 +68,7 @@ then
   date > $logFile
 
   #start the process itself in a child-proces, while logging all information to the logfile
-  (sudo $path/$cmd $remainingArgs > $logFile  2>&1)&
+  (sudo $cmd $remainingArgs > $logFile  2>&1)&
 
   #store the process id (PID)
   echo $! > $lockFile

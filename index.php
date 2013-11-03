@@ -1,62 +1,38 @@
 <html>
-
 <head>
 <link rel="stylesheet" type="text/css" href="format.css">
+
+<?php 
+    include('./lib/plugin.php');  
+    include('./scriptmaster/scriptmaster.php');
+    ?>
+
+<title>
+..::WebAppCenter::.. - <?php echo $APP['title']; ?>
+</title>
 </head>
 
-<body>
+  <div id="frame">
   
-    
-    <div id="header"><?php include('header.php'); ?></div>
-
-    <div id="menu">
-      <table>
-      <tr>
-	<td><a href="?page=home">home</a></td>
-	<td><a href="?page=sketch">sketch</a></td>
-        <td><a href="?page=prog">flashprogrammer</a></td>
-	<td><a href="?page=controls">controls</a></td>
-	<td><a href="?page=about">about</a></td>
-	<td><a href="?page=scriptmaster">test</a></td>
-	</tr>
-      </table>
-    
+    <div id="apps">
+      <div id="apps2">
+      <?php include('nav.php'); ?>
+      </div>
     </div>
 
-    <div id="content">
-      <?php
+    <div id="main">
+	<div id="header">
+	  <?php include('title.php'); ?>
+	  <?php renderMenu(); ?>
+	</div>
 	
-	date_default_timezone_set('Europe/London');
-	
-	extract( $_GET, EXTR_PREFIX_ALL, "url" );
-	extract( $_POST, EXTR_PREFIX_ALL, "url" );
-	
-	
-	
-	if (!isset($url_page)){
-	  $page='';
-	} else {
-	  $page=$url_page;
-	}
-	
-	switch ($page) {
-	    case "home": include( './home/index.php'); break;
-	    case "sketch": include( './sketcheditor/index.php'); break;
-	    case "prog": include( './flashprogrammer/index.php'); break;
-	    case "controls": include( './controls/index.php' );break;
-	    case "about": include( './about/index.php' );break;
-	    case "scriptmaster": include( './scriptmaster/index.php' );break;
-	    
-	  
-	    default: echo "select a page";
-	  }
-	
-      
-      ?>
-    
+	<div id="content">
+	  <div id="debugx">
+	  <?php print_r($APP);?>
+	  </div>
+	  <?php include( './lib/main.php' ); ?>
+	</div>
     </div>
- 
 
-  
-</body>
+  </div>
 </html>
