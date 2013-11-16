@@ -1,11 +1,15 @@
  
 <?php
 
+/*
   if (!isset($url_action)){
     $action='';
   } else {
     $action=$url_action;
   }
+*/  
+  $action=getUrlParam("action");
+  
 
   switch ($action){
    case 'start': include( './dummyProcess/dummyProcess.php'); break;   

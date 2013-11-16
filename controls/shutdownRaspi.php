@@ -33,3 +33,8 @@ function ajax_call() {
 
 <div id="log"></div>
 
+<p>
+Raspi is stopping all services and will switch of processing. Please wait for at least 40sec.
+You then may disconnect the power. 
+<p>
+Please note: As all services beeing stopped this page wont be processed and thus reloading this page in the browser disconnects the browser.

@@ -4,22 +4,31 @@
   
 ?>
 
+<h3>Raspi Tools</h3>
 
-AVR Tools
-<ul>
-<li><a href="?page=controls&controlstate=start_avr">start AVR</a> starts the onboard AVR</li>
-<li><a href="?page=controls&controlstate=stop_avr">stop AVR</a> stops the onboard AVR</li>
-</ul>
+<div id="controls_item">
+<a href="<?php postToMe('reboot_raspi'); ?>">reboot Raspi</a> 
+<br>
+reboots the raspi immediatly and will take a while</li>
+</div>
 
-Raspi Tools
-<ul>
-<li><a href="?page=controls&controlstate=reboot_raspi">reboot Raspi</a> reboots the raspi immediatly and will take a while</li>
-<li><a href="?page=controls&controlstate=shutdown_raspi">shutdown Raspi</a> shutdown of the raspi immediatly, will take a while </li>
+<div id="controls_item">
+<a href="<?php postToMe('shutdown_raspi'); ?>">shutdown Raspi</a> 
+<br>
+shutdown of the raspi immediatly, will take a while </li>
+</div>
 
-</ul>
 
-Logging Tools
-<ul>
-<li><a href="?page=controls&controlstate=dmesg">dmesg</a> shows messages regarding to devices attached to the raspi</li>
-<li><a href="?page=controls&controlstate=messages">messages</a> shows linux messages /var/log/messages</li>
-</ul>
+<h3>Logging Tools</h3>
+
+<div id="controls_item">
+<a href="<?php postToMe('dmesg'); ?>">dmesg</a>
+<br>
+shows messages regarding to devices attached to the raspi
+</div>
+
+<div id="controls_item">
+<a href="<?php postToMe('messages'); ?>">messages</a>
+<br>
+shows linux messages /var/log/messages
+</div>

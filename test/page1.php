@@ -3,13 +3,11 @@
 <h3>this is the content of page1</h3>
 
 
-<?php echo "current action is ".$action."<br>";?>
+<?php echo "current action is ".getAction()."<br>";?>
 
 <div style="border:dashed gray;min-height:100px;">
   <?php 
-    if (isset($url_text)){
-      echo $url_text;
-    }
+      echo getUrlParam( 'text' );
     ?>  
 </div>
 

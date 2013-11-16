@@ -2,16 +2,15 @@
 
 </div>
 
-    <table>
-	<tr><td><a href="?app=home">home</a></td></tr>
-	<tr><td><a href="?app=BlackLabel">BlackLabel</a></td></tr>
-        <tr><td><a href="?app=controls">controls</a></td></tr>
-	<tr><td><a href="?app=preferences">preferences</a></td></tr>
-	<tr><td><a href="?app=test">-test-</a></td></tr>
-	<tr><td><a href="?app=about">about</a></td></tr>
-    </table>
+    <ul>
+	<li><a href="?app=home"><span id="home">home</span></a></li>
+	<li><a href="?app=BlackLabel"><span id="home">BlackLabel</span></a></li>
+        <li><a href="?app=controls"><span id="home">controls</span></a></li>
+	<li><a href="?app=preferences"><span id="home">preferences</span></a></li>
+	<li><a href="?app=test"><span id="home">-test-</span></a></li>
+	<li><a href="?app=about"><span id="home">about</span></a></li>
+    </ul>
 
 <div style="min-height:1000px;">
 
 </div>
-eite

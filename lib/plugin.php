@@ -1,26 +1,20 @@
 <?php
 
   include( './lib/menuCreator.php');
-  
-  date_default_timezone_set('Europe/London');
-
-  extract( $_GET, EXTR_PREFIX_ALL, "url" );
-  extract( $_POST, EXTR_PREFIX_ALL, "url" );
-
-
-
-  if (!isset($url_app)){
-    $app='home';
-  } else {
-    $app=$url_app;
+ 
+  function getAction(){
+      return getGlobal('action');
   }
+  
+  
+  $app=getUrlParam('app');
 
-  // strip/replace unwanted characters
+  // strip/replace unwanted characters and check existance
   if (!is_dir( $app )){
-    $app = 'home';  
+    $app = 'missing';  
   } 
   if (!is_file($app.'/plugme.php')){
-    $app = 'home';
+    $app = 'missing';
   }
   
   

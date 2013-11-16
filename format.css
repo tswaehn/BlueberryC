@@ -18,7 +18,7 @@ body {
   //border:thin solid gray;
   //background-color: white;
     
-  //color: #828282;
+  color: #828282;
 } 
 
 a {
@@ -28,37 +28,28 @@ a {
   //padding: 10px;
   //width:100%;
   text-decoration:none;
-  color: #70b6f8;
-  font-weight:bold;
+  color:#306090;
+  //font-weight:bold;
 }
 
-
+a:hover{
+  color:#0066CC; 
+}
 
 #frame {
   background-color:white;
   border:thin solid gray;
-  width:1000px;
+  width:900px;
   margin:0 auto;
   margin-top:5px;
   height:95%;
 }
 
-#apps {
-  border: thin dashed #d5d5d5;
-  width:150px;
-  height:100%;
-  overflow:hidden;
-  float:left;
-}
-#apps2{
-  overflow:scroll;
-  width:170px;
-  height:120%;
-}
+
 
 #main {
   overflow:hidden;
-  width:830px;
+  width:730px;
   height:100%;
   overflow:hidden;
   float:right;
@@ -67,49 +58,71 @@ a {
     color: #fafafa;
     background-color:green;
     border: thin solid #d5d5d5;
-    
-    height:100px;
+    text-align:right;
+    padding-right:30px;
+    height:80px;
     overflow:hidden;
-    text-shadow: 0px 0px 10px red;
-    
-    background-image:url(Electronics.png);
+    text-shadow: 0px 0px 30px black;
+    text-shadow: 0px 0px 20px black;
+    text-shadow: 0px 0px 10px black;
+    margin: 5px 5px 0px 0;
+    background-image:url(Electronics2.png);
     background-repeat:no-repeat;
   }
 
   #menu {
-    
+    height:60px;
+    overflow:hidden;
+    //background-color:#fafafa;
   }
-  
+    
+    #menu-scroll{
+      overflow-x:auto;
+      overflow-y:hidden;
+      height:100%;
+      width:100%;
+      white-space: nowrap;
+    }
+    
   #menu ul {
       list-style:none;
+      margin:10px 0 0 0;
+      padding:0 0 0 0;
   }
   
   #menu li {
       display:inline;
+      margin:0 0 0 0;
+      padding:0 5px 0 5px;
   }
   
   
   #menu a {
-	  padding:5px;
-	  color: white;
-	  border: solid 1px #90d6f8;
-	  background: #70b6f8;
-	  background: -webkit-gradient(linear, left top, left bottom, from(#70b6f8), to(#90d6f8));
-	  background: -moz-linear-gradient(top,  #70b6f8,  #90d6f8);
-	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#70b6f8', endColorstr='#90d6f8');
+	 padding:5px;
+	 color: #306090;
+	 //background-color:white;
+ 	 //border:thin solid gray;
+	 // color: white;
+	 // border: solid 1px #90d6f8;
+	 // background: #70b6f8;
+	 // background: -webkit-gradient(linear, left top, left bottom, from(#70b6f8), to(#90d6f8));
+	 // background: -moz-linear-gradient(top,  #70b6f8,  #90d6f8);
+	 // filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#70b6f8', endColorstr='#90d6f8');
   }
   
   #menu a:hover {
-	  background: #f47c20;
-	  background: -webkit-gradient(linear, left top, left bottom, from(#5096f8), to(#70b6f8));
-	  background: -moz-linear-gradient(top,  #5096f8,  #70b6f8);
-	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5096f8', endColorstr='#70b6f8');
+	 background-color: #f0f0f0;
+	 color:#0066CC; 
+	 // background: #f47c20;
+	 // background: -webkit-gradient(linear, left top, left bottom, from(#5096f8), to(#70b6f8));
+	 // background: -moz-linear-gradient(top,  #5096f8,  #70b6f8);
+	 // filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5096f8', endColorstr='#70b6f8');
   }
   #menu a:active {
-	  color: #fcd3a5;
-	  background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
-	  background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
-	  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+	 // color: #fcd3a5;
+	 // background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+	 // background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+	 // filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
   }
 
   #header {
@@ -118,22 +131,9 @@ a {
   
   #content {
     height:calc(100% - 150px - 10px);
-    overflow-y:scroll;
+    overflow-y:auto;
+    padding-right:5px;
   }
-  
-#apps a {
-  padding:20px;
-}
-
-#apps tr {
-  height:30px;
-  text-align:right;
-}
-
-#debugx {
-  background-color:yellow;
-  border:thin solid red;
-}
 
 #log {
   border: dashed gray;

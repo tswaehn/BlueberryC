@@ -2,7 +2,7 @@
 
 myname=$0
 
-cd ./sketcheditor/sketches/
+cd ./sketches/blinky/
 
 #ls -la 
 sudo make upload

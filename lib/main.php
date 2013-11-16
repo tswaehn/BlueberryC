@@ -2,6 +2,19 @@
 
     <?php
 
+      function loadPage( $page ){
+	
+	if (is_file($page)){
+	  include( $page );
+	} else {
+	  // please note, ... we are in the plugin folder now
+	  include( '../lib/pageNotFound.php' );
+	}
+	  
+	
+      }
+      
+    
       if (!isset($url_pageId)){
 	$pageId='';
       } else {
@@ -28,23 +41,23 @@
       
       // now move over to the app directory
       chdir( $APP['base_dir'] );
-      
+     
       if (array_key_exists( $pageId, $menu )){
 	  $item = $menu[$pageId];
 	  $APP['pageId']=$pageId;
 	  
 	  $page = $item['page'];
-	  if (is_file($page)){
-	    include($page);
-	  } else {
-	    echo "the desired link does not exist";
-	  }
+
+
       } else {
-	  echo "-no valid page found-<br>";
+	  //echo "-loading default-<br>";
 	  $APP['pageId']='';
-	  include( $APP['default_page'] );
+	  $page=$APP['default_page'];
 	  
       }
+      
+      // now insert page
+      loadPage($page);
       
     
     ?>

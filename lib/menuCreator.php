@@ -36,6 +36,7 @@
     $list=$app['menu'];
     
     echo "<div id='menu'>";
+    echo "<div id='menu-scroll'>";
     echo "<ul>";
     foreach( $list as $item ){
       echo "<li>";
@@ -43,6 +44,12 @@
       echo "</li>";
     }
     echo "</ul>";
+    /*
+    echo "Text (von lateinisch texere: weben/flechten) bezeichnet im nichtwissenschaftlichen Sprachgebrauch eine abgegrenzte, zusammenhängende, meist schriftliche sprachliche Äußerung, im weiteren Sinne auch nicht geschriebene, aber schreibbare Sprachinformation (beispielsweise eines Liedes, Films oder einer improvisierten Theateraufführung).
+
+Aus sprachwissenschaftlicher Sicht ist ein Text die sprachliche Form einer kommunikativen Handlung. Texte werden einerseits durch pragmatische, also situationsbezogene, „textexterne“ Merkmale, andererseits durch sprachliche, „textinterne“ Merkmale bestimmt.[1] In der Sprach- und Kommunikationswissenschaft existieren viele verschiedene Textdefinitionen nebeneinander, die anhand verschiedener Textualitätskriterien Texte und „Nicht-Texte“ voneinander trennen. Weiter gefasste Textbegriffe schließen auch Illustrationen oder Elemente der nonverbalen Kommunikation (etwa Mimik und Gestik) in den Text ein.[2] Unter Umständen kann sogar eine reine Bildsequenz als Text gelten, wenn damit erkennbar eine kommunikative Funktion erfüllt wird.[3] Der Begriff des „diskontinuierlichen“ Textes aus dem Bereich der Sprachdidaktik umfasst Texte, die nicht fortlaufend geschrieben sind und sich teilweise nicht-sprachlicher Mittel bedienen, wie Formulare, Tabellen und Listen, Grafiken und Diagramme.";
+  */
+    echo "</div>";
     echo "</div>";
   
   }

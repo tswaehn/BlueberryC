@@ -1,5 +1,6 @@
 #!/bin/bash 
 
-(sudo reboot) &
+#(sudo reboot) &
+echo "reboot"
 
 exit 1

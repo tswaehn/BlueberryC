@@ -1,12 +1,12 @@
 
 <?php
 
-  setCaption( "my home page" );
+  setCaption( "home" );
 
   setDefaultPage( 'index.php' );
-  
-  addMenuItem('C-Test1', 'page1.php' );
-  addMenuItem('C-Test2', 'page2.php' );
+
+  addMenuItem('Intro', 'intro.php' );
+  addMenuItem('HowTo', 'howTo.php' );
 
   
 ?>

@@ -1,8 +1,11 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="format.css">
+<link rel="stylesheet" type="text/css" href="apps.css">
+<link rel="stylesheet" type="text/css" href="plugins.css">
 
 <?php 
+    include('./lib/diverse.php');
     include('./lib/plugin.php');  
     include('./scriptmaster/scriptmaster.php');
     ?>
@@ -27,9 +30,6 @@
 	</div>
 	
 	<div id="content">
-	  <div id="debugx">
-	  <?php print_r($APP);?>
-	  </div>
 	  <?php include( './lib/main.php' ); ?>
 	</div>
     </div>

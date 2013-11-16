@@ -4,10 +4,18 @@
   
 ?>
 
+<h3>AVR Tools</h3>
 
-AVR Tools
-<ul>
-<li><a href="<?php postToMe('start_avr'); ?>">start AVR</a> starts the onboard AVR</li>
-<li><a href="<?php postToMe('stop_avr'); ?>">stop AVR</a> stops the onboard AVR</li>
-</ul>
+
+<div id="controls_item">
+<a href="<?php postToMe('start_avr'); ?>">start AVR</a> 
+<br>
+starts the onboard AVR
+</div>
+
+<div id="controls_item">
+<a href="<?php postToMe('stop_avr'); ?>">stop AVR</a> 
+<br>
+stops the onboard AVR
+</div>
 

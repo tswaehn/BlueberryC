@@ -5,7 +5,7 @@
  
 <?php
 
-  echo "current action is ".$action."<br>";
+  echo "current action is ".getAction()."<br>";
     
 ?>
 

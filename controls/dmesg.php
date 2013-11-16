@@ -31,7 +31,7 @@ function ajax_call() {
 <div id="log"></div>
 
 <p>
-<form action="?page=controls" method="post">
+<form action="<?php postToMe() ?>" method="post">
 
 <input type="submit" name="submit" value="Done">
 </form>

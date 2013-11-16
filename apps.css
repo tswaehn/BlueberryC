@@ -1,0 +1,63 @@
+#apps {
+  //border: thin dashed #d5d5d5;
+  width:150px;
+  height:100%;
+  overflow:hidden;
+  float:left;
+  background-color:#fafafa;
+}
+#apps2{
+  overflow:scroll;
+  width:170px;
+  height:120%;
+}
+ 
+#apps ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+
+
+  #spacer {
+    border:thin solid red;
+    background-color:white;
+    height:40px;
+    
+  }
+    #apps img {
+      margin:5px;
+    }
+    
+    #xx {
+      border:thin solid yellow;
+      text-align:right;
+      float:right;
+      height:40px;
+    vertical-align:middle; 
+background-image:url(home.png);      
+    }
+#apps a {
+  //background:url(img/button.gif);
+  display:block;
+  color:#306090;
+  font-weight:normal;
+  height:40px;
+  line-height:40px;
+  //margin-bottom:14px;
+  text-decoration:none;
+  width:150px;
+}
+
+#apps a:hover {
+  color:#0066CC;
+  background-color: #f0f0f0;
+}
+
+#home {
+background:url(./res/home_blue.png) no-repeat 5px 1px;
+text-indent:40px;
+display:block;
+}
+ 

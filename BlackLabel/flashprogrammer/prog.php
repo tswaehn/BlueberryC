@@ -1,5 +1,7 @@
 <?php 
-  
+ 
+ $action = getUrlParam('action');
+ 
  switch ($action){
     case 'select': include('./flashprogrammer/selectFile.php');break;
     case 'burn': include( './flashprogrammer/burn.php');break;

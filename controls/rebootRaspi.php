@@ -1,7 +1,8 @@
 
 <?php
 
-echo 'rebooting ...<br>';
+
+echo '<h3>Rebooting ...</h3>';
 
 $output= exec('./controls/rebootRaspi.sh' );  
 echo $output;
@@ -32,4 +33,11 @@ function ajax_call() {
 
 
 <div id="log"></div>
-
+<p>
+Raspi will reboot now. Please wait for at least 60sec. The display above will show messages when finished.
+<form action="<?php postToMe() ?>" method="post">
+<input type="submit" name="submit" value="Done">
+</form>
+<p>
+Please note: As all services beeing stopped this page wont be processed and thus reloading this 
+page in the browser disconnects the browser. So please be patient.

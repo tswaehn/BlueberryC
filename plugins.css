@@ -1,0 +1,83 @@
+ 
+#sketch_browser {
+  border: thin solid #fafafa;
+
+}
+
+#sketch_item {
+
+  border:thin solid #306090;
+  padding: 5px;
+  margin-bottom:10px;
+  min-height: 40px;
+  overflow:hidden;
+  
+}
+
+#sketch_view {
+  border:thin solid #306090;
+  padding: 5px;
+  margin-bottom:10px;
+  min-height: 80px;
+//  overflow:hidden;
+
+}
+
+#sketch_icon {
+  width:64px;
+  height:64px;
+  border:thin solid #838383;
+  float:left;
+  margin-right:10px;
+  
+}
+
+#sketch_caption {
+  font-weight:bold;
+  margin-right:10px;
+}
+
+#sketch_wiring {
+  margin:20px;
+}
+
+#sketch_description {
+  clear:both;
+}
+
+#sketch_projectid {
+  font-size:x-small;
+}
+
+
+#thumbnail {
+  width:32px;
+  height:32px;
+  border:thin solid #838383;
+  float:left;
+  margin-right:10px;
+}
+
+#caption {
+  font-weight:bold;
+  margin-right:10px;
+}
+
+#options {
+  margin-right:5px;
+}
+
+#description {
+  font-size:smaller;
+}
+
+
+#controls_item {
+  border:thin solid #306090;
+  padding: 5px;
+  margin-bottom:10px;
+  min-height: 40px;
+  overflow:hidden;
+  margin-left:50px;
+  margin-right:50px;
+}
