@@ -3,8 +3,10 @@
 
   $filesStorage='./flashprogrammer/filesStorage/';
 
-  if (isset($url_file)){
-    $file = $filesStorage.$url_file;
+  $file=getUrlParam('file');
+  
+  if (isset($file)){
+    $file = $filesStorage.$file;
   
   
     if (!file_exists($file)){
@@ -12,7 +14,7 @@
     
     } else {
     
-      start( './flashprogrammer/writeToFlash.sh \''.$file.'\'', 'prog', 'filesStorage' );
+      startProcess( './flashprogrammer/writeToFlash.sh \''.$file.'\'', getUrlParam('pageId'), 'filesStorage' );
     
     
     }

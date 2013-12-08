@@ -25,10 +25,10 @@ if ($retVal == 0){
   $enable='disabled';
 }
 
-  if (!isset($url_page)){
-    $page='';
+  if (!isset($url_pageId)){
+    $pageId='';
   } else {
-    $page=$url_page;
+    $pageId=$url_pageId;
   }
 
   if (!isset($url_action)){
@@ -37,7 +37,14 @@ if ($retVal == 0){
     $action=$url_action;
   }
   
-echo '<form action="?page='.$page.'&action='.$action.'" method="post">';
+  if (!isset($url_app)){
+    $app='';
+  } else {
+    $app=$url_app;
+  }
+  
+echo $app.' '.$pageId.' '.$action.'<br>';  
+echo '<form action="?app='.$app.'&pageId='.$pageId.'&action='.$action.'" method="post">';
 echo '<input type="submit" name="submit" value="Done" '.$enable.'>';
 echo '</form>';
 

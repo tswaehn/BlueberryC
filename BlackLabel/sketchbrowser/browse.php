@@ -5,6 +5,14 @@
   
   $browser = new Browser();
 
+  // check if something needs to be done before browsing
+  $do = getUrlParam('do');
+  switch ($do){
+    case 'new': $browser->newSketch( getUrlParam('sketch') ); break;
+    case 'del': $browser->removeSketch( getUrlParam('sketch') ); break;
+    case 'upload': break;
+  
+  }
     
 ?>
 
@@ -20,7 +28,7 @@
 <p>
 <h3>Create a new Sketch</h3>
 
-<form action="<?php postToMe('filesStorage_load'); ?>" method="post">
+<form action="<?php postToMe('browse'); ?>&do=new" method="post">
 <label for="name">Enter name for new sketch</label>
 <input type="text" name="sketch" value="" />
 <br>
@@ -32,7 +40,7 @@
 
 <h3>Upload a new Sketch</h3>
 Upload a new File:
-<form action="<?php postToMe('filesStorage_load'); ?>" method="post"
+<form action="<?php postToMe('browse'); ?>&do=upload" method="post"
 enctype="multipart/form-data">
 <label for="file">Filename:</label>
 <input type="file" name="file" id="file"><br>
@@ -41,7 +49,7 @@ enctype="multipart/form-data">
 
  
 <p>
-<h3>Removed and Deleted Sketches</h3>
+<h3>Removed Sketches</h3>
 You find all deleted files in <a href="<?php postToMe('trash'); ?>">trash</a>
 
 <p>

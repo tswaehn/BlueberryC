@@ -49,6 +49,13 @@
   font-size:x-small;
 }
 
+#sketch_setup {
+  border:thin solid #306090;
+  padding: 5px;
+  margin-bottom:10px;
+  min-height: 80px;
+}
+
 
 #thumbnail {
   width:32px;

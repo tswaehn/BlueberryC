@@ -4,7 +4,7 @@
 
 echo '<h3>Rebooting ...</h3>';
 
-$output= exec('./controls/rebootRaspi.sh' );  
+$output= exec('./rebootRaspi.sh' );  
 echo $output;
 
 ?>

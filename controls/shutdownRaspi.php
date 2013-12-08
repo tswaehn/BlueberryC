@@ -3,7 +3,7 @@
 
 echo '<h3>shutdown ...</h3>';
 
-$output= exec('./controls/shutdownRaspi.sh' );  
+$output= exec('./shutdownRaspi.sh' );  
 echo $output;
 
 ?>

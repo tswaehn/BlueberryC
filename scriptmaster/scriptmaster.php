@@ -2,10 +2,24 @@
 
 <?php
 
-function start( $cmd, $page_, $action_ ){
+function expandArray( $array ){
+ 
+  $output='';
+  foreach ($array as $key => $value){
+    $output.='&'.$key.'='.$value;
+  }
+  return $output;  
+}
+
+function startProcess( $cmd, $pageId, $action='', $opt = array(), $createLog = 1 ){
   
-  $GLOBALS["page"]=$page_;
-  $GLOBALS["action"]=$action_;
+  $param = array('pageId'=> $pageId, 'action'=>$action);
+  
+  if (is_array($opt)){
+    $param = array_merge( $param, $opt);  
+  }
+  
+  $parameter=expandArray( $param );
   
   exec('../scriptmaster/startprocess.sh '.$cmd, $output, $retVal);  
 
@@ -14,7 +28,8 @@ function start( $cmd, $page_, $action_ ){
   }
   
   switch ($retVal){
-    case 0: echo 'starting script ...<br>';break;
+    case 0: //echo 'starting script ...<br>';
+	    break;
     case 1: echo "script allready exececuting ...<br>";break;
     case 127: echo "cannot run script<br>";break;
     default:
@@ -40,7 +55,7 @@ function loaded(){
 }
 
 function ajax_call() {
-	xmlhttp.open("GET", "./scriptmaster/updateLog.php?page='.$GLOBALS["page"].'&action='.$GLOBALS["action"].'", true);
+	xmlhttp.open("GET", "./scriptmaster/updateLog.php?app='.getUrlParam("app").$parameter.'", true);
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4) {
 			document.getElementById("log").innerHTML=xmlhttp.responseText;
@@ -52,8 +67,11 @@ function ajax_call() {
 	return false;
 }
 </script>';
-
-echo '<div id="log">init</div>';
+//echo 'params '.$parameter.'<br>';
+  
+  if ($createLog == '1'){
+    echo '<div id="log">init</div>';
+  }
 
   
   

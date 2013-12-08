@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-#(sudo shutdown -h now) &
+(sudo shutdown -h now) &
 echo shutdown
 
 exit 1

@@ -29,6 +29,6 @@ if (isset($url_file)){
 
 ?>
 
-<form action="?page=prog&action=filesStorage" method="post">
+<form action="<?php postToMe('filesStorage'); ?>" method="post">
 <input type="submit" name="submit" value="Done">
 </form>

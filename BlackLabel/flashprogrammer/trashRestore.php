@@ -3,6 +3,8 @@
 $filesStorage='./flashprogrammer/filesStorage/';
 $trash = './flashprogrammer/trash/';
 
+  $url_file=getUrlParam('file');
+  
 if (isset($url_file)){
   $file = $url_file;
   

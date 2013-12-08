@@ -3,7 +3,7 @@
 
   $file='/tmp/download.hex';
   
-  start( './flashprogrammer/readFromFlash.sh \''.$file.'\'', 'prog', 'read_name' );
+  startProcess( './flashprogrammer/readFromFlash.sh \''.$file.'\'', getUrlParam('pageId'), 'read_name' );
   
 
 ?>

@@ -6,9 +6,13 @@ class SketchConfig {
   private $iniFile;
   private $config;
   
-  function __construct( $sketch ){
+  function __construct( $sketch, $isTrash = false ){
     // fixed folder structure
-    $this->iniFile = './sketches/'.$sketch.'/sketch.ini';
+    if ($isTrash){
+      $this->iniFile = './trash/'.$sketch.'/sketch.ini';
+    } else {
+      $this->iniFile = './sketches/'.$sketch.'/sketch.ini';
+    }
 
     // remember current sketch name
     $this->sketch = $sketch;
@@ -32,17 +36,17 @@ class SketchConfig {
     
     // thumbnail
     if ($this->getConfig('info', 'thumbnail') == ''){
-      $this->setConfig('info', 'thumbnail', './BlackLabel/sketches/'.$this->sketch.'/thumbnail.png' );
+      $this->setConfig('info', 'thumbnail', $this->sketch.'/thumbnail.png' );
     }
     
     // wiring
     if ($this->getConfig('info', 'wiring') == ''){
-      $this->setConfig('info', 'wiring', './BlackLabel/sketches/'.$this->sketch.'/wiring.jpg' );
+      $this->setConfig('info', 'wiring', $this->sketch.'/wiring.jpg' );
     }
     
-    // project ID
-    if ($this->getConfig('info', 'projectID') == ''){
-      $this->setConfig('info', 'projectID', uniqid('', true) );
+    // sketch (just for info)
+    if ($this->getConfig('info', 'sketch') == ''){
+      $this->setConfig('info', 'sketch', $this->sketch );
     }
     
     // server side MD5 sum
