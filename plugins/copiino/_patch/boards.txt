@@ -1,0 +1,29 @@
+# See: http://code.google.com/p/arduino/wiki/Platforms
+
+##############################################################
+
+
+##############################################################
+
+copiino.name=Arduino Mega (ATmega1284p)
+
+copiino.upload.protocol=linuxspi
+#mega.upload.maximum_size=126976
+copiino.upload.speed=2000000
+
+#copiino.bootloader.low_fuses=0xFF
+#copiino.bootloader.high_fuses=0x9F
+#copiino.bootloader.extended_fuses=0xFD
+#mega.bootloader.path=atmega
+#mega.bootloader.file=ATmegaBOOT_168_atmega1280.hex
+#mega.bootloader.unlock_bits=0x3F
+#mega.bootloader.lock_bits=0x0F
+
+copiino.build.mcu=atmega1284p
+copiino.build.f_cpu=16000000L
+copiino.build.core=arduino
+#mega.build.variant=mega
+copiino.build.variant=copiino
+
+##############################################################
+

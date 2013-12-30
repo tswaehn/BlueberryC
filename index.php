@@ -11,7 +11,7 @@
     ?>
 
 <title>
-..::WebAppCenter::.. - <?php echo $APP['title']; ?>
+..::BlueberryControl::.. - <?php echo $APP['title']; ?>
 </title>
 </head>
 
@@ -19,13 +19,13 @@
   
     <div id="apps">
       <div id="apps2">
-      <?php include('nav.php'); ?>
+      <?php include('./lib/nav.php'); ?>
       </div>
     </div>
 
     <div id="main">
 	<div id="header">
-	  <?php include('title.php'); ?>
+	  <?php include('./lib/title.php'); ?>
 	  <?php renderMenu(); ?>
 	</div>
 	

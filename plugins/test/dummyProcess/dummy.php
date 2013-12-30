@@ -12,10 +12,10 @@
   
 
   switch ($action){
-   case 'start': include( './dummyProcess/dummyProcess.php'); break;   
-   case 'done': include( './dummyProcess/done.php'); break;
+   case 'start': include( PLUGIN_DIR.'dummyProcess/dummyProcess.php'); break;   
+   case 'done': include( PLUGIN_DIR.'dummyProcess/done.php'); break;
     default:
-	      include( './dummyProcess/selectAction.php' );
+	      include( PLUGIN_DIR.'dummyProcess/selectAction.php' );
   
   }
   

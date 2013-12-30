@@ -3,4 +3,4 @@
 (sudo shutdown -h now) &
 echo shutdown
 
-exit 1
+exit 0

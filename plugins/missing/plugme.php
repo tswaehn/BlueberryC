@@ -3,7 +3,7 @@
 
   setCaption( "missing plugin" );
 
-  setDefaultPage( 'index.php' );
+  setDefaultPage( PLUGIN_DIR.'index.php' );
 
     
 ?>

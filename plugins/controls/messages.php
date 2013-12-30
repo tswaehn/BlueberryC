@@ -15,11 +15,11 @@ if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
 }
 
 function ajax_call() {
-	xmlhttp.open("GET", './controls/updateMessages.php', true);
+	xmlhttp.open("GET", './plugins/controls/updateMessages.php', true);
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4) {
-			//document.getElementById('xxx').value = xmlhttp.responseText;
-			document.getElementById("log").innerHTML=xmlhttp.responseText;
+			document.getElementById('xxx').value = xmlhttp.responseText;
+			//document.getElementById("log").innerHTML=xmlhttp.responseText;
 		}
 	}
 	xmlhttp.send(null)

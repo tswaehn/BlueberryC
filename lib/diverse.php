@@ -1,5 +1,11 @@
 <?php
 
+  date_default_timezone_set('Europe/London');
+
+  extract( $_GET, EXTR_PREFIX_ALL, "url" );
+  extract( $_POST, EXTR_PREFIX_ALL, "url" );
+
+
   function getGlobal( $var ){
     
     if (!isset($GLOBALS[$var])){
@@ -20,13 +26,18 @@
   }
 
   
-   
-   
-  date_default_timezone_set('Europe/London');
-
-  extract( $_GET, EXTR_PREFIX_ALL, "url" );
-  extract( $_POST, EXTR_PREFIX_ALL, "url" );
-
+ 
+  function getAction(){
+      return getGlobal('action');
+  }
+ 
+    
+  function sanitizeDir( $directory ){
+    // do some checks
+    $sanDir = $directory;
+    // return 
+    return $sanDir;
+  }
   
   function moveUploadedFile( $uploadName, $targetDir ){
   

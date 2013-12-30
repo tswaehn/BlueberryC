@@ -3,10 +3,10 @@
 
   setCaption( "home" );
 
-  setDefaultPage( 'index.php' );
+  setDefaultPage( PLUGIN_DIR.'index.php' );
 
-  addMenuItem('Intro', 'intro.php' );
-  addMenuItem('HowTo', 'howTo.php' );
+  addMenuItem('Intro', PLUGIN_DIR.'intro.php' );
+  addMenuItem('HowTo', PLUGIN_DIR.'howTo.php' );
 
   
 ?>

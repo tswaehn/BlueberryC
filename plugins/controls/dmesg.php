@@ -15,7 +15,7 @@ if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
 }
 
 function ajax_call() {
-	xmlhttp.open("GET", './controls/updateDevicemessages.php', true);
+	xmlhttp.open("GET", './plugins/controls/updateDevicemessages.php', true);
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4) {
 			//document.getElementById('xxx').value = xmlhttp.responseText;

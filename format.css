@@ -69,9 +69,22 @@ a:hover{
     background-image:url(Electronics2.png);
     background-repeat:no-repeat;
   }
+  
+  #version {
+    text-align:left;
+    font-size:x-small;
+    text-shadow: 1px 1px 1px black;
+    //text-shadow: -1px -1px 0px black;
+
+    float:left;
+    margin-top:55px;
+    margin-left:5px;
+    
+    color: #eeeeee;
+  }
 
   #menu {
-    height:60px;
+    height:40px;
     overflow:hidden;
     //background-color:#fafafa;
   }
@@ -126,11 +139,11 @@ a:hover{
   }
 
   #header {
-    height:150px;
+    height:130px;
   }
   
   #content {
-    height:calc(100% - 150px - 10px);
+    height:calc(100% - 130px);
     overflow-y:auto;
     padding-right:5px;
   }

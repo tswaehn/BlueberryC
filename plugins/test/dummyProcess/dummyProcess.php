@@ -1,6 +1,6 @@
 <?php
 
-  startProcess( './dummyProcess/dummyProcess.sh arg1 arg2 arg3', getUrlParam('pageId') );
+  startProcess( PLUGIN_DIR.'dummyProcess/dummyProcess.sh arg1 arg2 arg3', getUrlParam('pageId') );
   
 
 ?>

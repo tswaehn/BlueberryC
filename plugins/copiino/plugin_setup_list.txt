@@ -1,0 +1,12 @@
+./plugins/copiino/_patch/avrdude
+./plugins/copiino/_patch/libelf.so.1
+./plugins/copiino/_patch/avrdude.conf
+./plugins/copiino/_patch/boards.txt
+./plugins/copiino/_patch/pins_arduino.h
+./plugins/copiino/_patch/burn-chip.sh
+./plugins/copiino/_patch/check-fuses.sh
+./plugins/copiino/_patch/check-sudo.sh
+./plugins/copiino/_patch/reset-chip.sh
+./plugins/copiino/_patch/run-chip.sh
+./plugins/copiino/setup_plugin.sh
+./plugins/copiino/plugin_copiino.tar.gz

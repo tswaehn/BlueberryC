@@ -3,7 +3,7 @@
 
 echo '<h3>shutdown ...</h3>';
 
-$output= exec('./shutdownRaspi.sh' );  
+$output= exec( PLUGIN_DIR.'shutdownRaspi.sh' );  
 echo $output;
 
 ?>
@@ -18,7 +18,7 @@ if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
 }
 
 function ajax_call() {
-	xmlhttp.open("GET", './controls/updateMessages.php', true);
+	xmlhttp.open("GET", './plugins/controls/updateMessages.php', true);
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4) {
 			//document.getElementById('xxx').value = xmlhttp.responseText;

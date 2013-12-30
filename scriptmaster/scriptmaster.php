@@ -21,7 +21,7 @@ function startProcess( $cmd, $pageId, $action='', $opt = array(), $createLog = 1
   
   $parameter=expandArray( $param );
   
-  exec('../scriptmaster/startprocess.sh '.$cmd, $output, $retVal);  
+  exec('./scriptmaster/startprocess.sh '.$cmd, $output, $retVal);  
 
   foreach ($output as $line){
     echo $line."<br>";

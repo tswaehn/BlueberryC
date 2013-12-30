@@ -1,0 +1,74 @@
+./plugins/copiino/index.php
+./plugins/copiino/plugme.php
+./plugins/copiino/avrcontrols
+./plugins/copiino/avrcontrols/index.php
+./plugins/copiino/avrcontrols/startAVR.sh
+./plugins/copiino/avrcontrols/stopAVR.php
+./plugins/copiino/avrcontrols/selectAction.php
+./plugins/copiino/avrcontrols/stopAVR.sh
+./plugins/copiino/avrcontrols/startAVR.php
+./plugins/copiino/flashprogrammer
+./plugins/copiino/flashprogrammer/trashRestore.php
+./plugins/copiino/flashprogrammer/read.php
+./plugins/copiino/flashprogrammer/writeDefaultFuses.sh
+./plugins/copiino/flashprogrammer/prog.php
+./plugins/copiino/flashprogrammer/filesStorage
+./plugins/copiino/flashprogrammer/filesStorage/downloaded__1383262286.hex
+./plugins/copiino/flashprogrammer/filesStorage/arduino_blinky.hex
+./plugins/copiino/flashprogrammer/filesStorage/Demo UART 500000.hex
+./plugins/copiino/flashprogrammer/filesStorage/Demo UART.hex
+./plugins/copiino/flashprogrammer/filesStorage/Demo UART 1000000.hex
+./plugins/copiino/flashprogrammer/filesStorage/Blinky.hex
+./plugins/copiino/flashprogrammer/filesStorage/Demo UART 115200.hex
+./plugins/copiino/flashprogrammer/filesStorage/Backup from Running blink.hex
+./plugins/copiino/flashprogrammer/readName.php
+./plugins/copiino/flashprogrammer/plugme.php
+./plugins/copiino/flashprogrammer/filesStorage.php
+./plugins/copiino/flashprogrammer/filesStorageDel.php
+./plugins/copiino/flashprogrammer/readFromFlash.sh
+./plugins/copiino/flashprogrammer/writeToFlash.sh
+./plugins/copiino/flashprogrammer/about.php
+./plugins/copiino/flashprogrammer/trash.php
+./plugins/copiino/flashprogrammer/selectAction.php
+./plugins/copiino/flashprogrammer/updateLog.php
+./plugins/copiino/flashprogrammer/filesStorageLoad.php
+./plugins/copiino/flashprogrammer/trash
+./plugins/copiino/flashprogrammer/trash/downloaded__1383261668.hex
+./plugins/copiino/flashprogrammer/trash/downloaded__1382990232.hex
+./plugins/copiino/flashprogrammer/trash/downloaded__1382967653.hex
+./plugins/copiino/flashprogrammer/trash/Home2.desktop
+./plugins/copiino/flashprogrammer/trash/downloaded__1382963363.hex
+./plugins/copiino/flashprogrammer/trash/downloaded__1382990647.hex
+./plugins/copiino/flashprogrammer/trash/hallo_welt.png
+./plugins/copiino/flashprogrammer/readMove.php
+./plugins/copiino/flashprogrammer/burn.php
+./plugins/copiino/sketchbrowser
+./plugins/copiino/sketchbrowser/index.php
+./plugins/copiino/sketchbrowser/default_thumbnail.jpg
+./plugins/copiino/sketchbrowser/makefile
+./plugins/copiino/sketchbrowser/browse.php
+./plugins/copiino/sketchbrowser/compile.php
+./plugins/copiino/sketchbrowser/default.ino
+./plugins/copiino/sketchbrowser/setup.php
+./plugins/copiino/sketchbrowser/xCompiler.php
+./plugins/copiino/sketchbrowser/view.php
+./plugins/copiino/sketchbrowser/trash.php
+./plugins/copiino/sketchbrowser/xSketchConfig.php
+./plugins/copiino/sketchbrowser/edit.php
+./plugins/copiino/sketchbrowser/xBrowser.php
+./plugins/copiino/sketchbrowser/default_wiring.jpg
+./plugins/copiino/sketchbrowser/execute_make.sh
+./plugins/copiino/sketches/
+./plugins/copiino/trash/
+./plugins/copiino/sketches/blinky
+./plugins/copiino/sketches/blinky/image.jpg
+./plugins/copiino/sketches/blinky/wiring.jpg
+./plugins/copiino/sketches/blinky/Blink.ino
+./plugins/copiino/sketches/blinky/makefile
+./plugins/copiino/sketches/blinky/cartoon-candle-10.gif
+./plugins/copiino/sketches/blinky/sketch.ini
+./plugins/copiino/sketches/blinky/Elephant 128x128.png
+./plugins/copiino/sketches/blinky/360e power 128x128.png
+./plugins/copiino/sketches/blinky/thumbnail.png
+./plugins/copiino/sketches/blinky/Arduino_Stepper_two_wire_bb.png
+./plugins/copiino/sketches/blinky/LCD_bb.png

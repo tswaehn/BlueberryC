@@ -6,14 +6,14 @@
   
   switch ($action){
 
-   case 'reboot_raspi': include( 'rebootRaspi.php'); break;
-   case 'shutdown_raspi': include( 'shutdownRaspi.php'); break;
+   case 'reboot_raspi': include( PLUGIN_DIR.'rebootRaspi.php'); break;
+   case 'shutdown_raspi': include( PLUGIN_DIR.'shutdownRaspi.php'); break;
 
-   case 'dmesg': include( 'dmesg.php'); break;   
-   case 'messages': include( 'messages.php'); break;   
+   case 'dmesg': include( PLUGIN_DIR.'dmesg.php'); break;   
+   case 'messages': include( PLUGIN_DIR.'messages.php'); break;   
    
     default:
-	      include( 'selectAction.php' );
+	      include( PLUGIN_DIR.'selectAction.php' );
   
   }
   
