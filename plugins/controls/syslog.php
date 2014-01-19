@@ -1,7 +1,7 @@
 
 <?php
 
-echo '<h3>/var/log/messages ...</h3>';
+echo '<h3>syslog ...</h3>';
 
 ?>
 
@@ -15,7 +15,7 @@ if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
 }
 
 function ajax_call() {
-	xmlhttp.open("GET", './plugins/controls/updateMessages.php', true);
+	xmlhttp.open("GET", './plugins/controls/updateSyslog.php', true);
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4) {
 			//document.getElementById('xxx').value = xmlhttp.responseText;
@@ -32,5 +32,7 @@ function ajax_call() {
 
 <p>
 <form action="<?php postToMe() ?>" method="post">
+
 <input type="submit" name="submit" value="Done">
 </form>
+ 
