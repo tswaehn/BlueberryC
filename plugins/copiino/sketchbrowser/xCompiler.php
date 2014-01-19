@@ -80,6 +80,15 @@ class Compiler {
     
   }
   
+  function compileAndRun($sketch, $text){
+    
+    $this->saveToFile( $sketch, $text );
+    $inoFile = $this->lookForInoFile($sketch);
+    
+    startProcess( PLUGIN_DIR.'sketchbrowser/execute_make_and_run.sh \''.$sketch.'\' \''.$inoFile.'\'', getUrlParam('pageId'), '', 'x', 0 );
+    
+  }
+  
   function editor($sketch){
     
     $file = $this->lookForInoFile($sketch);
@@ -87,14 +96,15 @@ class Compiler {
     $text = $this->loadFromFile($file); 
     
     echo '<form action="'.linkToMe('edit').'&sketch='.$sketch.'" method="post">';
+    echo '<button type="sbumit" name="do" value="cancel">Cancel</button>';
+    echo '<button type="submit" name="do" value="save">Save</button>';
+    echo '<button type="submit" name="do" value="compile">Compile</button>';    
+    echo '<button type="submit" name="do" value="compile_and_run">Compile and Run ...</button>';
     echo '<textarea name="text" cols="80" rows="25">';
 
     echo $text;
     
-    echo '</textarea><p>';
-    echo '<button type="sbumit" name="do" value="cancel">Cancel</button>';
-    echo '<button type="submit" name="do" value="save">Save</button>';
-    echo '<button type="submit" name="do" value="compile">Compile and Run ...</button>';
+    echo '</textarea>';
     echo '</form>';   
   
   }
@@ -109,6 +119,7 @@ class Compiler {
     $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
     $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
     $projectID = $config->getConfig('info','sketch');
+    $cpp = $config->getConfig('cpp', 'file');
     
     $serverMD5 = $config->getConfig('info','MD5-Sum');
     $options = '<a href="'.linkToMe('view').'&sketch='.$sketch.'">view</a> ';
@@ -129,16 +140,31 @@ class Compiler {
     echo '<span id="options">'.$options.'</span>';
     echo '<span id="description">'.$description.'</span>';
     
-    // compile output
-    echo '<div id="log"></div>';
-    
     // the editor
     echo '<p>';
     $this->editor($sketch);
-    
+
+    // compile output
+    echo '<div id="log"></div>';
+        
     // the wiring schematic
     echo '<div id="sketch_wiring"><img src="'.$wiring.'" width="400" /></div><br>';
+
+    // additional files
+    echo '<div>';
+    echo 'Additional library files:<br>';
+      //
+      if (!empty($cpp)){
+	echo '<ul>';
+	foreach ($cpp as $file){
+	  $show='<a href="'.PLUGIN_DIR.'sketches/'.$sketch.'/'.$file.'" style="padding-left:10px;padding-right:10px" target="_blank">show</a>';
+	  echo '<li>'.$file.' '.$show.'</li>';
+	}
+	echo '</ul>';
+      }
     echo "</div>";
+
+    echo '</div>';
     
     echo "</div>";
     

@@ -37,7 +37,6 @@ class Upgrade {
 	curl_setopt($CR, CURLOPT_POSTFIELDS, $urlencoded );
 	curl_setopt($CR, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($CR, CURLOPT_SSL_VERIFYPEER, 0);
-	curl_setopt($CR, CURLOPT_FAILONERROR,true);
 
 
 	$result = curl_exec( $CR );

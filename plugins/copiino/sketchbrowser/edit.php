@@ -14,6 +14,7 @@
     case 'cancel': break;
     case 'save': $compiler->saveToFile( $sketch, getUrlParam('text') ); break;
     case 'compile': $compiler->compile( $sketch, getUrlParam('text') ); break;
+    case 'compile_and_run': $compiler->compileAndRun( $sketch, getUrlParam('text') ); break;
   
   
   }

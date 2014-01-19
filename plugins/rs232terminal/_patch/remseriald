@@ -1,0 +1,54 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          remserial
+# Required-Start:    apache2
+# Required-Stop:     apache2
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop remserial socket server
+### END INIT INFO
+
+HOST=localhost
+PORT=10000
+DEVICE=/dev/ttyAMA0
+STTY_OPTS="115200 raw"
+MAX_CONNECTIONS=1
+DEBUG=3
+
+
+case "$1" in
+	start)
+		echo -e ${COLOREDSTAR}"Starting remote-serial daemon ..."
+		echo "opening $DEVICE ($STTY_OPTS) at $HOST:$PORT"
+		DAEMON_ARGS=" -d -p $PORT -s $STTY_OPTS -m $MAX_CONNECTIONS -x $DEBUG $DEVICE" 
+
+		start-stop-daemon --start --exec /usr/bin/remserial \
+			--pidfile /var/run/remserial.pid --make-pidfile --background \
+			-- -d -p $PORT -s "$STTY_OPTS" -m $MAX_CONNECTIONS -x $DEBUG $DEVICE 
+		
+		;;
+
+	stop)
+		echo -e ${COLOREDSTAR}"Stopping remote-serial daemon ..."
+		start-stop-daemon --quiet --stop --pidfile /var/run/remserial.pid
+
+		;;
+	
+	restart)
+		$0 stop
+		sleep 1
+		$0 start
+		;;
+
+	status)
+		statusproc /usr/bin/remserial
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit 0
