@@ -1,0 +1,2 @@
+./plugins/rs232terminal/index.php
+./plugins/rs232terminal/plugme.php

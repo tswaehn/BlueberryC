@@ -39,6 +39,8 @@ echo "--- setup copiino"
   sudo cp -f $patch"check-sudo.sh" $target
   sudo cp -f $patch"reset-chip.sh" $target
   sudo cp -f $patch"run-chip.sh" $target
+  sudo cp -f $patch"enable-rs232.sh" $target
+  sudo cp -f $patch"disable-rs232.sh" $target
 
   variants=/usr/share/arduino/hardware/arduino/variants/copiino/
   sudo mkdir -p $variants
@@ -50,6 +52,12 @@ echo "--- setup copiino"
   if [ ! -e "/usr/local/etc/avrdude.conf" ]; then
     sudo ln -s /etc/avrdude.conf /usr/local/etc/avrdude.conf
   fi
+  #
+  sudo cp -f $patch"copiinod" /etc/init.d/
+  ## update startup information
+  sudo update-rc.d copiinod defaults
+  ## restart copiino
+  sudo /etc/init.d/copiinod restart  
 
 
 ## make sure the SPI module is loaded (needed for copiino)

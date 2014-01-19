@@ -2,7 +2,7 @@
 #
 # author: sven.ginka@gmail.com
 # date: 23.dec.2013
-# modified: 29.dec.2013
+# modified: 18.jan.2014
 #
 
 # import build_nr
@@ -151,6 +151,8 @@ mkdir -p $packagedir
 
   # include plugins 
   echo "./plugins/copiino/plugin_setup.tar.gz" >> $setuplist
+  echo "./plugins/rs232terminal/plugin_setup.tar.gz" >> $setuplist
+  
   
   # create the setup archive (thread as root package, thus chane owner to uid=0, gid=0)
   tar -cpzf $setup_package --owner=0 --group=0 -T $setuplist

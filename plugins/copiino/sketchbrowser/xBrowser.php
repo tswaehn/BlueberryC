@@ -1,6 +1,8 @@
 <?php
 
   include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
+  include( PLUGIN_DIR.'sketchsync/xSketchSync.php');
+  
   
 
 class Browser {
@@ -13,31 +15,6 @@ class Browser {
     $this->sketchTrash = PLUGIN_DIR.'trash/';
   }
 
-  function generateMyProjectMD5( $sketch ){
-    // check all files
-    $dir = $this->sketchFolder.'/'.$sketch.'/';
-    $text = '';
-    if ($handle = opendir( $dir )) {
-
-      while (false !== ($file = readdir($handle))) {
-	  if ($file != "." && $file != "..") {
-	    if (is_file($dir.$file)){
-	      //echo "checking ".$file."<br>";
-	      $text .= file_get_contents($dir.$file );
-	    } else {
-	      //echo "skipping ".$file."<br>";
-	    }
-	  }    
-      }
-      closedir($handle);
-    } else {
-      echo "failed to check directory";
-    }
-   
-    return md5( $text );
-    
-  }
-  
   function newSketch( $caption ){
     
     if ($caption==''){
@@ -180,8 +157,10 @@ class Browser {
     
     $options = '<a href="'.linkToMe('view').'&sketch='.$sketch.'">view</a> ';
     $options.= '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
+    $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=upload">upload</a> ';
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
+    
     
     echo '<div id="sketch_item">';
     echo '<div id="thumbnail"><img src="'.$thumbnail.'" width="32" height="32" /></div>';
@@ -205,11 +184,17 @@ class Browser {
     $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
     $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
     $projectID = $config->getConfig('info','sketch');
-    
-    $serverMD5 = $config->getConfig('info','MD5-Sum');
-    $projectMD5 = $this->generateMyProjectMD5( $sketch );
+    $cpp = $config->getConfig('cpp', 'file');
+
+    $serverMD5='0';
+    $md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
+    // display old md5sum
+    if (is_File($md5File)){
+      $serverMD5= file_get_contents( $md5File );
+    }
     
     $options = '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
+    $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=upload">upload</a> ';
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
 
@@ -223,11 +208,22 @@ class Browser {
     echo '<div id="sketch_projectid">';
     echo '<span id="sketch_projectid">projectID '.$projectID.'</span><br>';
     echo '<span id="sketch_md5">server MD5 '.$serverMD5.'</span><br>';
-    echo '<span id="sketch_md5">project MD5 '.$projectMD5.'</span><br>';
     echo '</div>';
     
     echo '<span id="sketch_description">'.$description.'</span><br>';
     echo '<div id="sketch_wiring"><img src="'.$wiring.'" width="400" /></div><br>';
+
+    echo '<span id="sketch_description">';
+    if (!empty($cpp)){
+      echo 'additional library files for this sketch:';
+      echo '<ul>';
+      foreach ($cpp as $file){
+	echo '<li>'.$file.'</li>';
+      }
+      echo '</ul>';
+    }
+    echo '</span><br>';
+
     echo "</div>";
 
     //echo '<a href="'.linkToMe('filesStorage_del').'&file='.$filename.'">del</a>';
@@ -272,14 +268,14 @@ class Browser {
     $description = $config->getConfig('info','description');
     $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
     $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
+    $cpp = $config->getConfig('cpp','file');
     
     echo '<h3>Setup Sketch - '.$caption.'</h3>';
     
     echo '<div id="sketch_setup">';
-    echo 'Caption:<br>';
+    echo 'Caption: ';
     echo '<form action="'.linkToMe('setup').'&sketch='.$sketch.'&do=save_caption" method="post">';
-    echo '<input type="text" name="caption" value="'.$caption.'"><br>';
-    echo '<br>';
+    echo '<input type="text" name="caption" value="'.$caption.'">';
     echo '<input type="reset" name="submit" value="Cancel">';
     echo '<input type="submit" name="submit" value="Save">';
     echo '</form>';   
@@ -287,19 +283,20 @@ class Browser {
 
     echo '<div id="sketch_setup">';
     echo 'Thumbnail:<br>';
-    echo '<img src="'.$thumbnail.'" width="64" height="64" />';
+    echo '<img src="'.$thumbnail.'" width="64" height="64" style="float:left"/>';
+    echo '<div >';
     echo '<form action="'.linkToMe('setup').'&sketch='.$sketch.'&do=save_thumbnail" method="post" enctype="multipart/form-data">';
     echo '<label for="file">Filename:</label>';
     echo '<input type="file" name="thumbnail"><br>';
     echo '<input type="submit" name="submit" value="Upload">';
     echo '</form>';
     echo '</div>';
+    echo '</div>';
     
     echo '<div id="sketch_setup">';
     echo 'Description:<br>';
     echo '<form action="'.linkToMe('setup').'&sketch='.$sketch.'&do=save_description" method="post">';
-    echo '<textarea name="description" rows="20" cols="70">'.$description.'</textarea>';
-    echo '<br>';
+    echo '<textarea name="description" rows="5" cols="70">'.$description.'</textarea>';
     echo '<input type="reset" name="submit" value="Cancel">';
     echo '<input type="submit" name="submit" value="Save">';
     echo '</form>';   
@@ -314,9 +311,94 @@ class Browser {
     echo '<input type="submit" name="submit" value="Upload">';
     echo '</form>';
     echo '</div>';
+
+    echo '<div id="sketch_setup">';
+    echo 'Additional library files:<br>';
+    //
+    if (!empty($cpp)){
+      echo '<ul>';
+      foreach ($cpp as $file){
+	$del='<a href="'.linkToMe('setup').'&sketch='.$sketch.'&do=del_cpp&file='.$file.'" style="padding-left:10px;padding-right:10px">del</a>';
+	$show='<a href="'.PLUGIN_DIR.'sketches/'.$sketch.'/'.$file.'" style="padding-left:10px;padding-right:10px" target="_blank">show</a>';
+	echo '<li>'.$del.' '.$file.' '.$show.'</li>';
+      }
+      echo '</ul>';
+    }
+
+    echo '<form action="'.linkToMe('setup').'&sketch='.$sketch.'&do=add_cpp" method="post" enctype="multipart/form-data">';
+    echo '<label for="file">Filename:</label>';
+    echo '<input type="file" name="cpp"><br>';
+    echo '<input type="submit" name="submit" value="Upload">';
+    echo '</form>';
+    echo '</div>';
+    
+   
     
     echo '<p>';
 
+  }
+  
+  function uploadSketch( $sketch ){
+    
+    $sync = new SketchSync();
+    $config= new SketchConfig( $sketch );
+
+    $caption = $config->getConfig('info','caption');
+    $description = $config->getConfig('info','description');
+    $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
+    $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
+    $cpp = $config->getConfig('cpp','file');
+
+    $md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
+    $old_md5sum='0';
+    // display old md5sum
+    if (is_File($md5File)){
+      $old_md5sum= file_get_contents( $md5File );
+      echo 'old md5 is: '.$old_md5sum.'<br>';
+    }
+    
+    echo '<pre>';
+    echo 'uploading '.$caption.' ('.$sketch.')<br>';
+      
+    $files = array();
+    $files[] = $config->getFilename();
+    $files[] = PLUGIN_DIR.'sketches/'.$sketch.'/'.'default.ino';
+    $files[] = $thumbnail;
+    $files[] = $wiring ;
+    foreach ($cpp as $file ){
+      $files[] = PLUGIN_DIR.'sketches/'.$sketch.'/'.$file;
+    }
+
+    $args = array();
+    $args['login']='quitscheente';
+    $args['sketch']=$sketch;
+    $args['parentmd5']=$old_md5sum;
+    
+    // send files and data
+    $result = $sync->sendFiles( $files, $args );
+    
+    // parse for the new md5sum
+    $matches=array();
+    preg_match("/<md5>(.*?)<\/md5>/", $result, $matches);
+    
+    if (sizeof($matches)> 0){
+      $md5sum = $matches[1];
+      if (!empty( $md5sum )){
+	$md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
+      
+	if (file_put_contents( $md5File, $md5sum ) == false){
+	  echo "unable to write to file ".$md5File.'<br>';
+	}	
+	
+	echo 'new md5: '.$md5sum.'<br>';
+      }
+    } else {
+      echo 'error: cannot receive new md5sum<br>';
+    }
+    
+
+    echo '</pre>';
+    
   }
   
   function saveSketchCaption( $sketch ){
@@ -399,6 +481,71 @@ class Browser {
   
   
   }
+
+  function addCppFile( $sketch ){
+
+    $destination = PLUGIN_DIR.'sketches/'.$sketch.'/';
+    
+    $file = moveUploadedFile( 'cpp', $destination );
+    
+    if ($file){
+
+      $config= new SketchConfig( $sketch );
+      
+      $cppfile = $file['filename'];
+      
+      // load allready existing files
+      $filelist=$config->getConfig('cpp','file');
+      // add uploaded
+      $filelist[]=$cppfile;
+      // write back to config
+      $config->setConfig('cpp','file', $filelist );
+      $config->writeConfig();
+    
+      echo 'added cpp file '.$cppfile.'<br>';
+    
+    } else {
+  
+  
+      echo 'failed to add file<br>';
+      
+    }
+  }  
+  
+  function delCppFile( $sketch ){
+    
+    $file = getUrlParam('file');
+    $destination = PLUGIN_DIR.'sketches/'.$sketch.'/';
+
+    // remove the file from disk
+    if (is_file( $destination.$file)){
+      if (unlink( $destination.$file)){
+	echo 'removed file '.$file.'<br>';
+      } else {
+	echo 'failed to remove '.$file.'<br>';
+      }
+    } else {
+      echo 'file '.$file.' does not exist<br>';
+    }
+
+    // remove the file from config
+    $config= new SketchConfig( $sketch );
+    // load allready existing files
+    $filelist=$config->getConfig('cpp','file');
+    
+    // find entry and remove
+    
+    if (($entry=array_search( $file, $filelist )) !== NULL){
+      unset($filelist[$entry]);
+      // write back to config
+      $config->setConfig('cpp','file', $filelist );
+      $config->writeConfig();    
+      echo 'removed from config<br>';
+    } else {
+      echo 'file '.$file.' not in config<br>';
+    }
+    
+  }  
   
   function display(){
 

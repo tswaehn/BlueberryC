@@ -11,7 +11,7 @@
 
   switch ($retVal){
     case 0: echo "script done<br>";break;
-    case 1: echo "script exececuting<br>";break;
+    case 1: echo "---<br>script exececuting, ...please wait<br>";break;
     case 127: echo "cannot run script<br>";break;
     default:
 	echo "return ".$retVal."<br>";
