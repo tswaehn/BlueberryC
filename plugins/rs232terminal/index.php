@@ -1,4 +1,26 @@
 <?php
+  extract( $_GET, EXTR_PREFIX_ALL, "url" );
+  extract( $_POST, EXTR_PREFIX_ALL, "url" );
+
+
+  function getGlobal( $var ){
+    
+    if (!isset($GLOBALS[$var])){
+      $ret='';
+    } else {
+      $ret=$GLOBALS[$var];
+    }
+
+    return $ret;
+  }
+
+  function getUrlParam( $var ){
+  
+    $urlParam = 'url_'.$var;
+    
+    $ret = getGlobal( $urlParam );
+    return $ret;
+  }
 
   
   echo "<h2>hello serial socket user</h2>";
@@ -6,8 +28,6 @@
   $fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
 
   echo "<div style='border:thin solid green;padding:10px'>";
-
-  extract($_GET, EXTR_OVERWRITE );
 
   $text=getUrlParam('text');
 
