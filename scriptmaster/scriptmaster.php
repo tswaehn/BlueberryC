@@ -85,7 +85,7 @@ function onAjaxCallDone(){
       if (xmlHttp.status == 200 || xmlHttp.status == 400){
 	document.getElementById(updateTarget).innerHTML=xmlHttp.responseText;
       } else {
-	document.getElementById("log").innerHTML="ajax error";
+	//document.getElementById("log").innerHTML="ajax error";
       }
     }
 }
