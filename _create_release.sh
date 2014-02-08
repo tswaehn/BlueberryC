@@ -42,7 +42,8 @@ build_nr=`cat build_nr`
 name="BlueberryC"
 
 ftproot="ftp://copiino.cc/BlueberryC/"
-ftpuser="master:2w9pnyW1"
+ftpuser=`cat ftp-login.txt`
+echo "login for ftp "$ftpuser
 
 # --- start
 packagedir="./_release/"
