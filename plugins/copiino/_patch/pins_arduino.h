@@ -27,23 +27,20 @@
 
 #include <avr/pgmspace.h>
 
-#define NUM_DIGITAL_PINS            22
+#define NUM_DIGITAL_PINS            24
 #define NUM_ANALOG_INPUTS           6
 #define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
 
-#if defined(__AVR_ATmega8__)
-#define digitalPinHasPWM(p)         ((p) == 9 || (p) == 10 || (p) == 11)
-#else
-#define digitalPinHasPWM(p)         ((p) == 3 || (p) == 5 || (p) == 6 || (p) == 9 || (p) == 10 || (p) == 11)
-#endif
+#define digitalPinHasPWM(p)         ((p) == 2 || (p) == 3 || (p) == 7 || (p) == 8 || (p) == 9 || (p) == 10 || (p) == 12 || (p) == 13)
+
 
 static const uint8_t SS   = 10;
 static const uint8_t MOSI = 11;
 static const uint8_t MISO = 12;
 static const uint8_t SCK  = 13;
 
-static const uint8_t SDA = 18;
-static const uint8_t SCL = 19;
+static const uint8_t SDA = 23;
+static const uint8_t SCL = 22;
 static const uint8_t LED_BUILTIN = 13;
 
 static const uint8_t A0 = 14;
@@ -55,9 +52,9 @@ static const uint8_t A5 = 19;
 static const uint8_t A6 = 20;
 static const uint8_t A7 = 21;
 
-#define digitalPinToPCICR(p)    (((p) >= 0 && (p) <= 21) ? (&PCICR) : ((uint8_t *)0))
+#define digitalPinToPCICR(p)    (((p) >= 0 && (p) <= 23) ? (&PCICR) : ((uint8_t *)0))
 #define digitalPinToPCICRbit(p) (((p) <= 7) ? 2 : (((p) <= 13) ? 0 : 1))
-#define digitalPinToPCMSK(p)    (((p) <= 7) ? (&PCMSK2) : (((p) <= 13) ? (&PCMSK0) : (((p) <= 21) ? (&PCMSK1) : ((uint8_t *)0))))
+#define digitalPinToPCMSK(p)    (((p) <= 7) ? (&PCMSK2) : (((p) <= 13) ? (&PCMSK0) : (((p) <= 23) ? (&PCMSK1) : ((uint8_t *)0))))
 #define digitalPinToPCMSKbit(p) (((p) <= 7) ? (p) : (((p) <= 13) ? ((p) - 8) : ((p) - 14)))
 
 #ifdef ARDUINO_MAIN
@@ -154,7 +151,10 @@ const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
 	PA, /*PA5	19	*/
 
 	PA, /*PA6	20	*/
-	PA  /*PA7	21	*/
+	PA, /*PA7	21	*/
+	
+	PC, /*PC0   22  */
+	PC  /*PC1   23  */
 };
 
 const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
@@ -179,45 +179,36 @@ const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
 	_BV(4),
 	_BV(5),
 	_BV(6), /* 20, port A */
-	_BV(7)
+	_BV(7),
+	_BV(0), /* 22, port C */
+	_BV(1)
 };
 
 const uint8_t PROGMEM digital_pin_to_timer_PGM[] = {
-	NOT_ON_TIMER, /* 0 - port D */
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
-	// on the ATmega168, digital pin 3 has hardware pwm
-#if defined(__AVR_ATmega8__)
-	NOT_ON_TIMER,
-#else
-	TIMER2B,
-#endif
-	NOT_ON_TIMER,
-	// on the ATmega168, digital pins 5 and 6 have hardware pwm
-#if defined(__AVR_ATmega8__)
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-#else
-	TIMER0B,
-	TIMER0A,
-#endif
-	NOT_ON_TIMER,
-	NOT_ON_TIMER, /* 8 - port B */
-	TIMER1A,
-	TIMER1B,
-#if defined(__AVR_ATmega8__)
-	TIMER2,
-#else
-	TIMER2A,
-#endif
+	TIMER1B, /*PD4	2	*/
+	TIMER2A, /*PD7	3	*/
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
-	NOT_ON_TIMER, /* 14 - port C */
+	TIMER0A, /*PB3	7	*/
+	TIMER2B, /*PD6	8 	*/
+	TIMER1A, /*PD5	9	*/
+	TIMER0B, /*PB4	10	*/
+	NOT_ON_TIMER,
+	TIMER3A, /*PB6	12	*/
+	TIMER3B, /*PB7	13	*/
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
 	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER
 };
 
 #endif

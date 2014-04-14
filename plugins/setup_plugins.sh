@@ -8,7 +8,21 @@
 
 # --- install copiino
 # install arduino-core and arduino-mk
-sudo apt-get -y install arduino-core arduino-mk
+  if [ $(dpkg-query -l | grep -c '^i.* arduino-core ') -eq 1 ]
+  then
+    echo "arduino-core allready installed"
+  else
+    sudo apt-get update  
+    sudo apt-get install -y arduino-core
+  fi
+
+  if [ $(dpkg-query -l | grep -c '^i.* arduino-mk ') -eq 1 ]
+  then
+    echo "arduino-mk allready installed"
+  else
+    sudo apt-get update  
+    sudo apt-get install -y arduino-mk
+  fi  
 
 
 # --- config 

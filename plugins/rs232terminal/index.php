@@ -1,59 +1,58 @@
 <?php
-  extract( $_GET, EXTR_PREFIX_ALL, "url" );
-  extract( $_POST, EXTR_PREFIX_ALL, "url" );
 
-  echo "<h2>hello serial socket user</h2>";
-
-  $fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
-
-  echo "<div style='border:thin solid green;padding:10px'>";
+  include( PLUGIN_DIR.'js_update.php' );
 
   $text=getUrlParam('text');
 
-  if (!$fp){
-    echo "error no socket <br>";
-    echo $errno. " " .$errstr;
+  echo "<h3>terminal</h3>";
+  
+  echo '<pre id="log">';
+  echo 'empty';
+  echo '</pre>';
+  
+  echo '<form action="'.linkToMe('send').'" method="post">';
+  echo '<input type="edit" name="text" value="'.$text.'">';
+  echo '<input type="submit" value="send">';
+  echo '</form>';
+  
+  insertUpdateScript( PLUGIN_DIR.'updateTerminal.php', 'log');  
+  
 
-  } else {
-    echo "<pre>";
-    echo "TX>".$text;
-    echo "<br>";
-
-    fwrite( $fp, $text );
-
-    stream_set_timeout($fp, 0,1000000);
-
-    echo "RX>";
-
-    $info = stream_get_meta_data($fp);
-
-    while ((!feof($fp)) && (!$info['timed_out'])) {
-      $info = stream_get_meta_data($fp);
-
-      $disp = fgets( $fp, 100 );
-
-      if ($disp != false){
-        echo $disp;
-      }
-    }
-    fclose( $fp );
+  function addTask(  $plugin, $action, $text, $obj=array()  ){
+  
+    $obj[] = array( $plugin => array( $action => $text ) );
     
-    echo "</pre>";
-    echo "<p> done";
+    return $obj;
+  }
+  
+  function encodeRequest( $obj ){
+    
+    $request = json_encode( $obj );
+  
+    return $request;
   }
 
-  echo "</div>";
-
-  echo "<p>";
-
-  echo '<form action="'.linkToMe('send').'" method="post">';
-  echo "<textarea name='text' cols='50', rows='10'>".$text."</textarea>";
-  echo "<input type='submit' value='send to controller'>";
-  echo "</form>";
-
-
+  
+  // send only if there is data 
+  if ($text != ""){
+  
+    $fp = @fsockopen( 'localhost', 9000, $errno, $errstr, 10 );
     
+    if (!$fp){
+      echo "error no socket <br>";
+      echo $errno. " " .$errstr;
 
+    } else {
+
+      stream_set_timeout($fp, 5 );
+      $obj=addTask('rs232', 'tx', $text );
+      fwrite( $fp, encodeRequest( $obj )  );
+    }
+    
+    fclose( $fp );
+
+  }  
+  
 
 ?>
- 
+

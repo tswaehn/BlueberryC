@@ -114,6 +114,8 @@ mkdir -p $packagedir
   find ./res/ -iname "*" -print >> $filelist
   find ./screenshots/ -iname "*" -print >> $filelist
   find ./scriptmaster/ -iname "*" -print >> $filelist
+  find ./3rdParty/ -iname "*" -print >> $filelist
+  
 
   # include only default plugins !!
   find ./plugins/about/ -iname "*" -print >> $filelist
@@ -149,7 +151,10 @@ mkdir -p $packagedir
   find ./  -maxdepth 1 -iname "setup.sh" -print >> $setuplist
   # include the setup-plugins script
   find ./plugins/  -maxdepth 1 -iname "setup_plugins.sh" -print >> $setuplist
-
+  # include server socket
+  find ./BlueberryC-server/ -iname "*" -print >> $setuplist
+  
+  
   # include plugins 
   echo "./plugins/copiino/plugin_setup.tar.gz" >> $setuplist
   echo "./plugins/rs232terminal/plugin_setup.tar.gz" >> $setuplist

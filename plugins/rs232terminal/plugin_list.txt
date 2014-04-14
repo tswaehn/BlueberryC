@@ -1,2 +1,6 @@
 ./plugins/rs232terminal/index.php
+./plugins/rs232terminal/updateTerminal.php
+./plugins/rs232terminal/js_update.php
 ./plugins/rs232terminal/plugme.php
+./plugins/rs232terminal/graph.php
+./plugins/rs232terminal/sensors.php
