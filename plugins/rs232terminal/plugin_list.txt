@@ -1,6 +1,11 @@
 ./plugins/rs232terminal/index.php
 ./plugins/rs232terminal/updateTerminal.php
+./plugins/rs232terminal/controls-xy.php
 ./plugins/rs232terminal/js_update.php
 ./plugins/rs232terminal/plugme.php
 ./plugins/rs232terminal/graph.php
+./plugins/rs232terminal/controls.php
 ./plugins/rs232terminal/sensors.php
+./plugins/rs232terminal/stick.png
+./plugins/rs232terminal/marble.png
+./plugins/rs232terminal/js_stick.js

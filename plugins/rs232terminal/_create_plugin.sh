@@ -23,6 +23,8 @@ rm -f $setuplist
 
 # create package
   find $basedir  -maxdepth 1 -iname "*.php" -print >> $filelist
+  find $basedir  -maxdepth 1 -iname "*.png" -print >> $filelist  
+  find $basedir  -maxdepth 1 -iname "*.js" -print >> $filelist  
   
   # create archive (note that www-data is usually uid=33 gid=33, thus change owner now)
   tar -cpzf $package --owner=33 --group=33 -T $filelist
