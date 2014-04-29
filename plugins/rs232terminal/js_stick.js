@@ -14,6 +14,73 @@ var send_complete=1;
 
 var xmlHttp= null;
 
+var touches = [];
+
+function onTouchStart(evt){
+  evt.preventDefault();
+  var touchList = evt.changedTouches;
+  var touch;
+   for(var i = 0; i < touchList.length; i++) {
+    //cons.html(cons.html() + "startX: " + touchList[i].screenX + ", id: " + touchList[i].identifier + "<br/>");
+    touch = {x: touchList[i].screenX, y: touchList[i].screenY, id: touchList[i].identifier};
+    touches.push(touch);
+    
+  }
+}
+
+function onTouchEnd(evt)
+{
+  
+  var touchList = evt.changedTouches;
+  var touch;
+  for(var i = 0; i < touchList.length; i++)
+  {
+    touch = {x: touchList[i].screenX, y: touchList[i].screenY, id: touchList[i].identifier};
+    for (var j = touches.length - 1; j >= 0 ; j--)
+    {
+      if (touches[j].id == touch.id)
+      {
+        touches.splice(j, 1);
+      }
+    }
+  }
+}
+
+function onTouchMove(evt){
+  evt.preventDefault();
+  
+  var touchList = evt.changedTouches;
+  var touch = touchList[0];
+
+  xoffs=div.offsetLeft;
+  yoffs=div.offsetTop;
+  
+  x=(touch.clientX-xoffs-xcenter);
+  y=(touch.clientY-yoffs-ycenter);
+
+  //invert y-position
+  y=-1* y;
+
+  if (x > 50){
+    x=50;
+  }
+  if (x < -50){
+    x=-50;
+  }
+  if (y > 50){
+    y=50;
+  }
+  if (y < -50){
+    y=-50;
+  }
+  
+  sendPosition(x,y);
+  
+  coord.innerHTML='X='+x+' Y='+ y;
+  setMarblePos(x,y);
+}
+
+
 function mouseDrag(evt){
   xoffs=div.offsetLeft;
   yoffs=div.offsetTop;
@@ -82,6 +149,11 @@ function setup_stick(){
   div.ondragover= mouseDrag;
   div.ondragend=mouseStopped;
   div.onclick=mouseDrag;
+  div.ontouchstart=onTouchStart;
+  div.ontouchend=mouseStopped;
+  div.ontouchcancel=onTouchEnd;
+  div.ontouchmove=onTouchMove;
+  
   //div.dragable=1;
   
   marble=document.getElementById('marble');

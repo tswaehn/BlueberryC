@@ -79,6 +79,10 @@
       return;
     } else {
       
+      // invert x
+      $x = -1*$x;
+      
+      // set direction fwd/rwd
       if ($y > 0){
 	// fwd
 	$dirLeft = chr(102).chr(0+ord('a')).chr(1+ord('a'));
@@ -91,12 +95,25 @@
       
       $max = 50;
       
+      //$speed = sqrt( $x^2 + $y^2 );
       $speed = abs( $y );
-      if ($speed < 15){
+      
+      if ($speed > 50){
+	$speed=50;
+      }
+      
+      if ($speed < 10){
 	$speed=0;
       }
       if (abs($x)<10){
 	$x = 0;
+      }
+      
+      if ($x > $max){
+	$x=$max;
+      }
+      if ($x < (-1*$max)){
+	$x = -1*$max;
       }
       
       

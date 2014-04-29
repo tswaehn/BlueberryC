@@ -10,6 +10,7 @@
   define('UPLOAD_FAILED',	101 );
   define('MKDIR_FAILD',		102 );
   define('MISSING_FILE',	103 );
+  define('SAME_PROJECT_EXISTS',	104 );
   
 
 class SketchServerSync {
@@ -76,11 +77,15 @@ class SketchServerSync {
     //
     echo 'uploading '.$this->file_count.' file(s) to "'.$uploaddir.'"<br>';
 
-    // create directory if not existent
-    if (!is_dir( $uploaddir)){
-      if (!mkdir( $uploaddir, 0777, true )){
-	return MKDIR_FAILD;
-      }
+    
+    // reject upload of same project without changes twice (same md5sum)
+    if (is_dir( $uploaddir )){
+      return SAME_PROJECT_EXISTS;
+    }
+
+    // create directory
+    if (!mkdir( $uploaddir, 0777, true )){
+      return MKDIR_FAILD;
     }
 
     // now write the old MD5sum to file on server

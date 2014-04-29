@@ -6,7 +6,8 @@
   echo "<h3>controls</h3>";
   
   echo '<script src="'.PLUGIN_DIR.'/js_stick.js"></script>';
-  echo '<div id="stick"></div>';
+  echo '<img id="Xstick" src="http://192.168.7.212:8080/?action=stream" />';
+  echo '<div id="stick" style="float:right"></div>';
   
 
   function addTask(  $plugin, $action, $text, $obj=array()  ){
@@ -44,6 +45,7 @@
 
   }  
   
+ 
 
 ?>
 

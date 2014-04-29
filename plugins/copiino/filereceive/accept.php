@@ -17,10 +17,11 @@
     echo $ret.'<br>';
     die();
   } else {
-    if ($sync->getFiles() == 0){
+    $errorCode= $sync->getFiles();
+    if ( $errorCode == 0){
       echo 'ok<br>';
     } else {
-      echo 'upload failed<br>';
+      echo 'err '.$errorCode.' upload failed <br>';
     }
   }
 
