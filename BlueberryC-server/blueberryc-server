@@ -1,0 +1,46 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          blueberryc-server
+# Required-Start:    remserial
+# Required-Stop:     remserial
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop blueberryc socket server
+### END INIT INFO
+
+DIR=/usr/lib/BlueberryC-server/
+FILE=BlueberryC-server.php
+
+case "$1" in
+	start)
+		echo -e ${COLOREDSTAR}"Starting blueberryc daemon ..."
+
+		start-stop-daemon --start --chdir ${DIR} --exec $FILE \
+			--pidfile /var/run/blueberryc-server.pid --make-pidfile --background 		
+		;;
+
+	stop)
+		echo -e ${COLOREDSTAR}"Stopping blueberryc daemon ..."
+		start-stop-daemon --quiet --stop --pidfile /var/run/blueberryc-server.pid
+
+		;;
+	
+	restart)
+		$0 stop
+		sleep 1
+		$0 start
+		;;
+
+	status)
+		statusproc $FILE
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit 0
+ 

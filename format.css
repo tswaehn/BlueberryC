@@ -157,3 +157,9 @@ a:hover{
   font-family:monospace;
   
 }
+
+#debug {
+  border:thin solid yellow;
+  padding:5px;
+  
+}

@@ -1,5 +1,8 @@
 <?php
+  
 
+  define( 'REMOTE_SERVER', 'http://localhost/~tswaehn/git_dev/BlueberryC-retro/plugins/copiino/filereceive/accept.php');
+  
 class SketchSync {
   
   
@@ -71,15 +74,34 @@ class SketchSync {
   
   function sendFiles( $filenames, $args=array() ){
     
-    $target_url = 'http://localhost/~tswaehn/git_dev/BlueberryC-retro/plugins/copiino/filereceive/accept.php';
+    $target_url = REMOTE_SERVER;
     
+    echo "<pre>";
     $result = $this->sendFilesViaCurl( $target_url, $filenames, $args );
     
-    // debug output
-    echo 'server result:<br>';
-    echo $result;
+      $start=strpos( $result, "<CONTENTS>" );
+      $end=strpos( $result, "</CONTENTS>" );
+
     
-    return $result;
+    $json = array();
+    if(($start === false ) || ($end === false)){
+      // debug output
+      echo 'server error - result:<br>';
+      echo $result;
+      
+      
+    } else {
+      
+      $json = substr( $result, $start + strlen("<CONTENTS>"), $end-($start+ strlen("<CONTENTS>")) );
+      print_r( $json );
+      
+    }
+
+    $array = json_decode( $json, TRUE );
+    
+    print_r( $array );
+    echo "</pre>";
+    return $array;
     
   }
 

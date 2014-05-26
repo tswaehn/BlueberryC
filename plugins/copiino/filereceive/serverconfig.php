@@ -1,6 +1,6 @@
 <?php
 
-  define('UPLOAD_DIR', './sketches/');
+  define('UPLOAD_DIR', './sketch-repo/');
   
   define('DEBUG', '1');
 

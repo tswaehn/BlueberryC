@@ -177,5 +177,83 @@
     */
   }
   
+  function timeDiffToString( $delta ){
+
+    // const :-)
+    $SECOND = 1;
+    $MINUTE = 60 * $SECOND;
+    $HOUR = 60 * $MINUTE;
+    $DAY = 24 * $HOUR;
+    $MONTH = 30 * $DAY;
+
+    // store the used timezone
+    $origTimeZone=date_default_timezone_get();
+    
+    // set to UTC
+    date_default_timezone_set('UTC');
+  
+    // convert (use UTC!!!)
+    $deltaArr = getdate( $delta );
+    
+    // switch back to orig
+    date_default_timezone_set( $origTimeZone );
+       
+    // get time to secs, mins, hours, ... etc.
+    $Seconds = $deltaArr["seconds"];
+    $Minutes = $deltaArr["minutes"];
+    $Hours = $deltaArr["hours"];
+    
+    $Days = $deltaArr["mday"] - 1 ; // hack to get starting with "0"
+    
+    $Months = $deltaArr["mon"] - 1; // hack to get starting with "0"
+    $Years = $deltaArr["year"] - 1970; // hack to get starting with "0"
+
+    
+
+    
+    // output debug
+    //echo " [".$delta."] ".$Years." ".$Months." ".$Days." ".$Hours." ".$Minutes." ".$Seconds." ";
+    
+    if ($delta < 0)
+    {
+      return "not yet";
+    }
+    if ($delta < 1 * $MINUTE)
+    {
+      return $Seconds == 1 ? "one second ago" : $Seconds . " seconds ago";
+    }
+    if ($delta < 2 * $MINUTE)
+    {
+      return "a minute ago";
+    }
+    if ($delta < 45 * $MINUTE)
+    {
+      return $Minutes . " minutes ago";
+    }
+    if ($delta < 90 * $MINUTE)
+    {
+      return "an hour ago";
+    }
+    if ($delta < 24 * $HOUR)
+    {
+      return $Hours . " hours ago";
+    }
+    if ($delta < 48 * $HOUR)
+    {
+      return "yesterday";
+    }
+    if ($delta < 30 * $DAY)
+    {
+      return $Days . " days ago";
+    }
+    if ($delta < 12 * $MONTH)
+    {
+      return $Months <= 1 ? "one month ago" : $Months . " months ago";
+    }
+    else
+    {
+      return $Years <= 1 ? "one year ago" : $Years . " years ago";
+    }
+  }  
     
 ?>

@@ -1,7 +1,7 @@
 <?php
 
-  include('xIniTools.php');
-  
+
+  define('EVERYTHING_FINE',     0);
   define('LOGIN_FAILED', 	10 );
   define('FILE_COUNT_FAILED', 	11 );
   define('SKETCH_FAILED', 	12 );
@@ -12,11 +12,29 @@
   define('MISSING_FILE',	103 );
   define('SAME_PROJECT_EXISTS',	104 );
   
+  
+  $errorStr = array( 
+          EVERYTHING_FINE => "thanks",
+          LOGIN_FAILED => "no valid login",
+          FILE_COUNT_FAILED => "missing number of uploaded files",
+          SKETCH_FAILED => "missing sketch name",
+          PARENT_MD5_FAILED => "no parent project given",
+          
+          UPLOAD_FAILED => "failed to receive files",
+          MKDIR_FAILD => "failed to store new project",
+          MISSING_FILE => "waiting for more files",
+          SAME_PROJECT_EXISTS => "this project already exists"         
+  
+  
+        );
+        
+class SketchUpload {
 
-class SketchServerSync {
 
-
-  private $login;
+  private $user;
+  private $email;
+  private $pwd;
+  
   private $file_count;
   private $sketch;
   private $parentMD5;
@@ -26,10 +44,19 @@ class SketchServerSync {
   }
 
   function check(){
-    $this->login= getUrlParam( 'login' );
-    if (empty($this->login)){
+    $this->user= getUrlParam( 'user' );
+    if (empty($this->user)){
       return LOGIN_FAILED;
     }
+    $this->email= getUrlParam( 'email' );
+    if (empty($this->email)){
+      return LOGIN_FAILED;
+    }
+    $this->pwd= getUrlParam( 'pwd' );
+    if (empty($this->pwd)){
+      return LOGIN_FAILED;
+    }
+    
     
     $this->file_count=getUrlParam('file_count');
     if (empty($this->file_count)){
@@ -45,11 +72,21 @@ class SketchServerSync {
     if ($this->parentMD5 == ''){
       return PARENT_MD5_FAILED;
     }
+
+
+    // check for valid user
+    $accounts = new Accounts();
+    if ($accounts->check( $this->user, $this->email, $this->pwd ) != 1){
+      return LOGIN_FAILED;
+    }
+    
+    
     
   }
   
-  function getFiles(){
-  
+  function importFiles(){
+    global $returnData;
+    
     // generate md5 sum
     $count=0;
     $contents='';
@@ -78,7 +115,7 @@ class SketchServerSync {
     echo 'uploading '.$this->file_count.' file(s) to "'.$uploaddir.'"<br>';
 
     
-    // reject upload of same project without changes twice (same md5sum)
+    // reject upload of same project without changes (same md5sum)
     if (is_dir( $uploaddir )){
       return SAME_PROJECT_EXISTS;
     }
@@ -133,7 +170,7 @@ class SketchServerSync {
     
     if (file_put_contents( $md5File, $md5sum ) == true){	
       // send new md5 sum to client
-      echo '<md5>'.$md5sum.'</md5>';
+      $returnData["md5Parent"] = $md5sum;
     } else {
       echo "unable to write to file ".$md5File.'<br>';
     }

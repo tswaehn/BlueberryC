@@ -1,8 +1,11 @@
 <?php
 
   include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
-  include( PLUGIN_DIR.'sketchsync/xSketchSync.php');
+  include( PLUGIN_DIR.'sync/xSketchUpload.php');
   
+  include( PLUGIN_DIR."/config/jsonSettings.php");
+  include( PLUGIN_DIR."/config/copiinoSettings.php" );
+    
   
 
 class Browser {
@@ -369,34 +372,50 @@ class Browser {
       $files[] = PLUGIN_DIR.'sketches/'.$sketch.'/'.$file;
     }
 
+    // load copiino account settings
+    $settings = new CopiinoSettings();
+    $user= $settings->getConfig( "user" );
+    $email = $settings->getConfig( "email" );
+    $pwd = $settings->getConfig( "pwd" );
+
     $args = array();
-    $args['login']='quitscheente';
+    $args['user']= $user;
+    $args['email']= $email;
+    $args['pwd']= $pwd;
+    
     $args['sketch']=$sketch;
     $args['parentmd5']=$old_md5sum;
+    
     
     // send files and data
     $result = $sync->sendFiles( $files, $args );
     
-    // parse for the new md5sum
-    $matches=array();
-    preg_match("/<md5>(.*?)<\/md5>/", $result, $matches);
+    if ($result["error"]){
     
-    if (sizeof($matches)> 0){
-      $md5sum = $matches[1];
-      if (!empty( $md5sum )){
-	$md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
-      
-	if (file_put_contents( $md5File, $md5sum ) == false){
-	  echo "unable to write to file ".$md5File.'<br>';
-	}	
-	
-	echo 'new md5: '.$md5sum.'<br>';
-      }
+      echo $result["msg"];
+
     } else {
-      echo 'error: cannot receive new md5sum<br>';
+      // parse for the new md5sum
+      if (isset($result["data"]["md5Parent"])){
+      
+        $md5sum = $result["data"]["md5Parent"];
+        
+        if (!empty( $md5sum )){
+          $md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
+        
+          if (file_put_contents( $md5File, $md5sum ) == false){
+            echo "unable to write to file ".$md5File.'<br>';
+          }	
+          
+          echo 'new md5: '.$md5sum.'<br>';
+        }
+      } else {
+        echo 'error: cannot receive new md5sum<br>';
+      }
+    
     }
     
-
+    
     echo '</pre>';
     
   }

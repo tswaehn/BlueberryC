@@ -1,5 +1,9 @@
 <?php
   
+  
+  extract( $_GET, EXTR_PREFIX_ALL, "url" );
+  extract( $_POST, EXTR_PREFIX_ALL, "url" );
+  
   function getGlobal( $var ){
     
     if (!isset($GLOBALS[$var])){
@@ -19,4 +23,15 @@
     return $ret;
   }
     
+  function jsonCurlReturn( $array ){
+    
+    $contents = json_encode( $array );
+    
+    $contents = "<CONTENTS>". $contents. "</CONTENTS>";
+    
+    echo $contents;    
+  
+  }
+  
+  
 ?>    
