@@ -41,7 +41,7 @@ build_nr=`cat build_nr`
 # --- config 
 name="BlueberryC"
 
-ftproot="ftp://copiino.cc/BlueberryC/"
+ftproot="ftp://packages.blueberrycontrol.com/BlueberryC/"
 ftpuser=`cat ftp-login.txt`
 echo "login for ftp "$ftpuser
 

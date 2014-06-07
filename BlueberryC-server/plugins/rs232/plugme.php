@@ -19,7 +19,8 @@
       
       $this->ci = new CommandInterface();
       
-      $this->fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
+      $this->fp = @fsockopen( 'raspi', 10000, $errno, $errstr, 10 );
+//      $this->fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
       
       if (!$this->fp){
 	$this->log( "error no socket" );

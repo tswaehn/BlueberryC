@@ -7,7 +7,7 @@
   
   echo '<script src="'.PLUGIN_DIR.'/js_stick.js"></script>';
   echo '<img id="Xstick" src="http://192.168.7.212:8080/?action=stream" />';
-  echo '<div id="stick" style="float:right"></div>';
+  echo '<div id="stick" style=""></div>';
   
 
   function addTask(  $plugin, $action, $text, $obj=array()  ){

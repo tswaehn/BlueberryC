@@ -1,0 +1,60 @@
+
+1.) server recives data as 
+  <CONTENT> ...data... </CONTENT>
+where "...data..." is of standard format (json encoded array)
+
+2.) server strips the <CONTENT> - tags 
+- tags are removed
+- array is unwrapped (json_decode of array)
+
+3.) server calls "SocketTask.php"
+to further process the recived array the server posts the array to a master processing task
+- check for correct array data
+- array can contain multiple information for multiple plugins
+- plugins are executed as ordered list beginning at first item
+- loop through all data items
+  - decide which plugin to use for the recived data
+  - check if the plugin is enabled
+  - unwrap the plugin information (remove surrounding array)
+  - post the plugin information to the plugin
+
+4.) processing data within the plugin
+- specific to plugin
+
+5.) return path begins
+- plugin returns data
+
+6.) server wraps return data into <RESPONSE> - tags
+- data is taken as is
+- put data into envelop <RESPONSE> ...data... </RESPONSE> 
+- send back to client
+
+7.) done
+- nothing else to do
+
+
+
+example:
+  
+  <CONTENT> 
+    array [ 
+  
+      array [ myPlugin => 
+          array [ action1 => data ]
+          array [ action2 => data ]          
+          array [ action3 => data ]          
+          ]  
+      
+      array [ anotherPlugin => ]
+      
+      ...
+      
+      array [ myPlugin => ]
+          array [ action2 => data ]
+          array [ action2 => data ]          
+          array [ action2 => data ]          
+          ]  
+      
+    ] 
+
+  </CONTENTS

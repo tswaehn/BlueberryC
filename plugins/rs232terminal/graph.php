@@ -2,6 +2,8 @@
   
  extract( $_GET, EXTR_PREFIX_ALL, "url" );
 
+ include( "server-talk.php" );
+ 
   function getGlobal( $var ){
     
     if (!isset($GLOBALS[$var])){
@@ -21,24 +23,6 @@
     return $ret;
   }
 
-  function addTask(  $plugin, $action, $text, $obj=array()  ){
-  
-    $obj[] = array( $plugin => array( $action => $text ) );
-    
-    return $obj;
-  }
-  
-  function encodeRequest( $obj ){
-    
-    $request = json_encode( $obj );
-  
-    return $request;
-  }
-  
-  $action=getUrlParam("action");
-  if ($action==""){
-    $action="sensorlog";
-  }
   
   function parseString( $str ){
     // remove (rs232)
@@ -63,7 +47,7 @@
   $data=array();
   $str="";
   
-  $fp = @fsockopen( 'localhost', 9000, $errno, $errstr, 10 );
+  $fp = @fsockopen( 'localhost', 9000, $errno, $errstr, 5000 );
   
   if (!$fp){
     //echo "error no socket <br>";
@@ -72,15 +56,13 @@
     $data[] = 0;
     
   } else {
-  
-
-      stream_set_timeout($fp, 5 );
     
+      $action="sensorlog";
       $obj=addTask('rs232', $action, '');
       
-      fwrite( $fp, encodeRequest( $obj )  );
+      $str = transferDataToSocket( $fp, encodeRequest( $obj )  );
 
-
+/*
       $info = stream_get_meta_data($fp);
 
       while ((!feof($fp)) && (!$info['timed_out'])) {
@@ -93,21 +75,24 @@
 	}
       }
       fclose( $fp );
-  
+  */
+    echo $str;
     $data = parseString( $str );
-  }
+    
   
-  //print_r($data);
+    //print_r($data);
 
-  // http://www.goat1000.com/svggraph-using.php
-  include('../../3rdParty/SVGGraph/SVGGraph.php');
-  
-  $settings['marker_size']=2;
-  $settings['stroke_width']=1;
-  //$settings['fill_under']=array(true,true);
-  
-  $graph = new SVGGraph(600,300, $settings);
-  $graph->Values($data);
-  $graph->Render('MultiLineGraph');
+    // http://www.goat1000.com/svggraph-using.php
+    include('../../3rdParty/SVGGraph/SVGGraph.php');
+    
+    $settings['marker_size']=2;
+    $settings['stroke_width']=1;
+    //$settings['fill_under']=array(true,true);
+    
+    $graph = new SVGGraph(600,300, $settings);
+    $graph->Values($data);
+    $graph->Render('MultiLineGraph');    
+  }
+
 
 ?>
