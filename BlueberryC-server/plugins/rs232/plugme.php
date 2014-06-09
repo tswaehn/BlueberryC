@@ -1,5 +1,5 @@
 <?php
-
+  
   include('./plugins/rs232/CommandInterface.php');
   
   define('DEFAULT_HIST_LEN', 20 );
@@ -12,6 +12,8 @@
     protected $hist_remain;
     protected $hist_size;
     
+    protected $fpLogfile; // file pointer
+    
     function setup(){
       $this->history= array();
       $this->hist_remain="";
@@ -19,8 +21,8 @@
       
       $this->ci = new CommandInterface();
       
-      $this->fp = @fsockopen( 'raspi', 10000, $errno, $errstr, 10 );
-//      $this->fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
+      //$this->fp = @fsockopen( 'raspi', 10000, $errno, $errstr, 10 );
+      $this->fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
       
       if (!$this->fp){
 	$this->log( "error no socket" );
@@ -29,17 +31,54 @@
       } else {
 	$this->log( "connected" );
       }
+      
+      
+     $this->startLogging( "/usr/share/BlueberryC/plugins/rs232/logs/");
+    }
+    
+    function timestamp(){
+      $date=date( "Y-m-d H_i_s" );
+      return $date;
     }
     
     function shutdown(){
       $this->log("close rs232 connection");
+      $this->logToFile( "stop logging rs232" );
       if ($this->fp){ 
 	fclose( $this->fp );
       }
     
     }
     
-    function addHistory( $str ){
+    function startLogging( $folder ){
+      if (!file_exists( $folder )){
+        mkdir( $folder, 0777, true );
+        if (!file_exists( $folder )){
+          return null;
+        }
+      }
+      
+      $filename = $folder.$this->timestamp()."-rs232.log";
+      
+       $this->fpLogfile = fopen( $filename, "a" );
+
+      $this->logToFile( "start logging rs232" );
+    }
+    
+    function logToFile( $str ){
+
+      // leave if no file is open
+      if ($this->fpLogfile == null){
+        return;
+      }
+      // add timestamp "new-line"
+      $str = "[".$this->timestamp()."] ". $str. "\n";
+      
+      // put to file
+      fwrite( $this->fpLogfile, $str );
+    }
+    
+    function addHistory( $str, $isRx ){
 
       // remove all \r
       $str = preg_replace("/\r/", "", $str);
@@ -54,21 +93,40 @@
       $i=0;
       // walk through cmds
       foreach ($cmds as $cmd){
-	// skip the last one
-      	if ($i <= ($len-1)){
-	  // check only (len-1) cmds as the last cmd might be incomplete
-	  
-	  $ret=$this->ci->execute( $cmd );
-	  if ($ret != ""){
-	    $cmd .= " (".$ret.")"; 
-	  }
-	  
-	  // add information to history
-	  $this->history[] = $cmd;
-	  
-	} else {
-	  $this->hist_remain = $cmd;
-	}
+
+        if ($isRx){
+          $this->logToFile("RX>".$cmd );
+
+          // skip the last one
+          if ($i <= ($len-1)){
+            // check only (len-1) cmds as the last cmd might be incomplete
+
+            if ($isRx){
+              $ret=$this->ci->execute( $cmd );
+              if ($ret != ""){
+                $cmd .= " (".$ret.")"; 
+              }
+            } else {
+              //
+            }
+            
+            
+            // add information to history
+            $this->history[] = "RX>".$cmd;
+            
+          } else {
+            $this->hist_remain = $cmd;
+          }
+          
+        } else {
+          $cmd = "TX>". $cmd;
+          
+          $this->logToFile( $cmd );
+          // add information to history
+          $this->history[] = $cmd;
+          
+        }
+      
       }
       
       // if history is too large, ... cut it
@@ -81,11 +139,15 @@
       
     }
     
+    function idle(){
+      // when in idle, ... just read new data
+      $this->rx();
+    }
+    
     function tx( $text ){
 
-
-      $this->log("TX ".$text);
-      $this->addHistory(  "TX>".$text ) ;
+    
+      $this->addHistory( $text, false ) ;
       
       // add end-line
       $text .= "\n";
@@ -112,13 +174,12 @@
 	
       } while ( $count < $len );
       
-      $this->log("done");
       
     }
     
     function rx(){
-      $this->log("RX ");
 
+      
       if ($this->fp){
       
 	stream_set_timeout($this->fp, 0, 100 );
@@ -129,13 +190,10 @@
 	  $disp = fread( $this->fp, 1024 );
 
 	  if ($disp != false){
-	    $this->addHistory( $disp );
-	    $this->log( $disp );
+            $this->addHistory( $disp, true );
 	  }
 	}
       }
-
-      $this->log("done");
     }
     
     function update( $history_len ){

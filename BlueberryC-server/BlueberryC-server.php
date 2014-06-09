@@ -1,6 +1,9 @@
 #!/usr/bin/php
 <?php
 
+  date_default_timezone_set('Europe/London');
+
+
   include('plugins.php');
 
   // Set time limit to indefinite execution
@@ -61,8 +64,12 @@
     $num_changed_sockets = socket_select($read,$write,$except, $sek=5);
     if ($num_changed_sockets == false){
       echo "nothing to do, ... \n";
+      $masterTask->idleAll();
       continue;
     }
+    
+    // 
+    $masterTask->idleAll();
     
     if ($num_changed_sockets > 0){
       $new_socket= socket_accept( $socket );

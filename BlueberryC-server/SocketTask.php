@@ -42,6 +42,14 @@
       $this->log("nothing to do");
     }
     
+    function process( $data ){
+      // nothing to do
+    }
+    
+    function idle(){
+      // nothing to do
+    }
+    
     
     // general: 
     function sendData( $out ){
@@ -96,6 +104,17 @@
       }
       
       $this->process( $data );
+    
+    }
+    
+    function idleAll(){
+    
+      foreach($this->tasks as $task){
+        $this->log("idle ".$task->name );
+        $task->idle();
+      }
+      
+      $this->idle();
     
     }
       
