@@ -10,7 +10,8 @@
     public $description;
     public $timestamp;
     public $contributors;
-    
+    public $commitMsg;
+    public $commitType;
     
     public $children;
     

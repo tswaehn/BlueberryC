@@ -1,6 +1,7 @@
 <?php
 
-define('URL','http://www.copiino.cc/upgrade.php');
+define('URL','http://packages.blueberrycontrol.com/upgrade.php');
+//define('URL','http://www.copiino.cc/upgrade.php');
 //define('URL','http://localhost/~tswaehn/git_dev/copiino.cc/upgrade.php');
 
 class Upgrade {

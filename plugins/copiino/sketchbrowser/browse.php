@@ -10,8 +10,6 @@
   switch ($do){
     case 'new': $browser->newSketch( getUrlParam('sketch') ); break;
     case 'del': $browser->removeSketch( getUrlParam('sketch') ); break;
-    case 'upload': $browser->uploadSketch( getUrlParam('sketch') ); break;
-  
   }
     
 ?>

@@ -13,7 +13,7 @@
 type=$1
 
 # config for WebAppCenter
-dl_root="http://www.copiino.cc/BlueberryC/"
+dl_root="http://packages.blueberrycontrol.com/BlueberryC/"
 dl_name="BlueberryC_setup.tar.gz"
 
 # type selector

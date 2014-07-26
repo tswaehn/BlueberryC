@@ -6,20 +6,50 @@ class SketchConfig {
   private $iniFile;
   private $config;
   
-  function __construct( $sketch, $isTrash = false ){
-    // fixed folder structure
-    if ($isTrash){
-      $this->iniFile =  PLUGIN_DIR.'trash/'.$sketch.'/sketch.ini';
-    } else {
-      $this->iniFile = PLUGIN_DIR.'sketches/'.$sketch.'/sketch.ini';
-    }
-
-    // remember current sketch name
-    $this->sketch = $sketch;
+  function __construct(){
+  }
   
+  
+  public static function loadByIni( $filename ){
+    
+    $obj = new SketchConfig();
+    
+    $obj->iniFile = $filename;
+    
     // read config from file
-    $this->readConfig();
+    $obj->readConfig();
+    
+    // remember current sketch name
+    $obj->sketch = $obj->getConfig("info", "sketch");
+    
+    return $obj;
+  }
+
   
+  public static function loadFromSketchFolder( $sketch ){
+    $obj= SketchConfig::loadByIni( PLUGIN_DIR.'sketches/'.$sketch.'/sketch.ini' );
+    return $obj;
+  }
+  
+  public static function loadFromTrashFolder( $sketch ){
+    $obj= SketchConfig::loadByIni(  PLUGIN_DIR.'trash/'.$sketch.'/sketch.ini' );
+    return $obj;
+  }
+
+  public static function loadByText( $text ){
+    
+    $obj = new SketchConfig();
+    
+    $obj->iniFile ="";
+    
+    // read config from file
+    $obj->readConfigFromString( $text );
+    
+    // remember current sketch name
+    $obj->sketch = $obj->getConfig("info", "sketch");
+    
+    return $obj;    
+    
   }
   
   function parseConfig(){
@@ -68,6 +98,15 @@ class SketchConfig {
     $this->parseConfig();
     $this->writeConfig();
 
+  }
+  
+  function readConfigFromString($text){
+    
+    $this->config = parse_ini_string( $text, true );
+  
+    $this->parseConfig();
+    //$this->writeConfig();
+  
   }
 
 

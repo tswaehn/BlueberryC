@@ -1,18 +1,27 @@
 <?php
 
 
-  define( "REMOTE_SERVER", 'http://homer/~tswaehn/git_dev/BlueberryC-retro/plugins/copiino/filereceive/download.php');
+  define( "REMOTE_SERVER_DL", 'http://homer/~tswaehn/git_dev/BlueberryC-retro/plugins/copiino/filereceive/download.php');
 
     
   include("xSketch.php");
-  include("display.php");
+  include("xSketchUpload.php");
+  include( PLUGIN_DIR."sketchbrowser/xBrowser.php");
+  include("displayProjects.php");
+  include("displaySingleProject.php");
+  include("displaySketch.php");
+  include("displayDownload.php");
   
   include( PLUGIN_DIR."config/jsonSettings.php");
   include( PLUGIN_DIR."config/copiinoSettings.php");
+  
+  include( PLUGIN_DIR."sketchbrowser/xSketchConfig.php" );
+  
+  
 
   function curlDownload( $args = array() ){
   
-    $target_url = REMOTE_SERVER;
+    $target_url = REMOTE_SERVER_DL;
     
     // start setup curl
     $curl_handle = curl_init();
@@ -26,6 +35,8 @@
     $result = curl_exec( $curl_handle );
     curl_close( $curl_handle );
   
+    //echo "<pre>".$result."</pre>";
+    
     $start=strpos( $result, "<CONTENTS>" );
     $end = strpos( $result, "</CONTENTS>" );
     
@@ -40,7 +51,13 @@
     $contents = preg_replace( "/<CONTENTS>|<\/CONTENTS>/", "", $contents );
     
     $array = json_decode( $contents, true );
-    
+
+        /*
+        echo "<pre>";
+           print_r( $array );
+        echo "</pre>";
+          */
+
     // remove the array and printout 
     $result = substr_replace( $result, "", $start, $end-$start );
     //echo '<div id="debug">'.$result.'</div>';
@@ -49,6 +66,10 @@
   }
   
   function arrayToSketches( $array ){
+    
+    if (!is_array( $array)){
+      return array();
+    }
     
     $sketches = array(); 
     
@@ -63,48 +84,11 @@
     return $sketches;
   }
   
-  $action = getUrlParam( "action" );
-  $sketch = getUrlParam( "sketch" );
-  
-  switch ($action){
-    
-    case 'project': 
-            $args = array("action"=> "project", "sketch"=>$sketch);
-            
-            // load copiino account settings
-            $settings = new CopiinoSettings();
-            $user= $settings->getConfig( "user" );
-            $email = $settings->getConfig( "email" );
-            $pwd = $settings->getConfig( "pwd" );
-            
-            // add copiino account
-            $args["user"] = $user;
-            $args["email"] = $email;
-            $args["pwd"] = $pwd;
-    
-            $array = curlDownload( $args );
-            
-            if (isset($array["account"])){
-                // telling that account is invalid
-                echo 'Invalid copiino.cc account please check settings.';
-            } else {
-
-              $sketches = arrayToSketches( $array );
-          
-              renderSingleProject( $sketches );
-            }
-            
-            break;
-
-    case 'download':
-            
-            $md5sum=getUrlParam("md5sum");
-            echo "Please confirm to download ".$sketch."<br>";
-            echo "Revision ".$md5sum;    
-    
-            break;
-    default:
-      $args= array( "action"=>"overview" );
+  function downloadDataFromServer( $args ){
+      
+      if (!is_array($args)){
+        $args=array( $args );
+      }
       
       // load copiino account settings
       $settings = new CopiinoSettings();
@@ -116,17 +100,96 @@
       $args["user"] = $user;
       $args["email"] = $email;
       $args["pwd"] = $pwd;
+
+      $array = curlDownload( $args );  
+  
+      return $array;
+  }
+  
+  
+  $action = getUrlParam( "action" );
+  $sketch = getUrlParam( "sketch" );
+  $scope = getUrlParam( "scope" );
+
+
+
+  switch ($action){
+    
+    case 'show_project': 
+            $args = array("action"=> "project", "sketch"=>$sketch, "scope"=>$scope );
+            
+            $data = downloadDataFromServer( $args );
+            
+            if (isset($data["account"])){
+                // telling that account is invalid
+                echo 'Invalid copiino.cc account please check settings.';
+            } else {
+
+              $sketches = arrayToSketches( $data );
+              renderSingleProject( $sketches, $scope );
+            }
+            
+            break;
+
+    case 'show_single':
+            $user= getUrlParam("user");
+            $md5sum= getUrlParam("md5sum");
+            $args = array("action"=> "sketch", "sketch"=>$sketch, "scope"=>$user, "md5sum"=>$md5sum );
+            
+            $data = downloadDataFromServer( $args );
+            
+            if (isset($data["account"])){
+                // telling that account is invalid
+                echo 'Invalid copiino.cc account please check settings.';
+            } else {
+
+              renderSketch( $data );
+            }
+    
+            break;
+            
+    case 'download':
+            $user= getUrlParam("user");
+            $md5sum= getUrlParam("md5sum");
+            $args = array("action"=> "sketch", "sketch"=>$sketch, "scope"=>$user, "md5sum"=>$md5sum );
+            
+            $data = downloadDataFromServer( $args );
+
+            if (isset($data["account"])){
+                // telling that account is invalid
+                echo 'Invalid copiino.cc account please check settings.';
+            } else {
+
+              downloadSketch( $data );
+            }
+    
+            break;
+
+            
+    default:
+    
+      // overview
       
-      $array = curlDownload( $args );
+      echo "<h3>Sketch Cloud</h3>";
+        
+      if ($scope=="global"){
+        echo 'switch to <a href="'.linkToMe('').'">my cloud</a><br>';
+      } else {
+        echo 'switch to <a href="'.linkToMe('').'&scope=global">global cloud</a><br>';
+      }
       
-      if (isset($array["account"])){
+      $args= array( "action"=>"overview", "scope"=>$scope );
+      
+      $data = downloadDataFromServer( $args );
+      
+      if (isset($data["account"])){
           // telling that account is invalid
           echo 'Invalid copiino.cc account please check settings.';          
       } else {
       
-        $sketches = arrayToSketches( $array );
+        $sketches = arrayToSketches( $data );
     
-        overview( $sketches );
+        overview( $sketches, $scope );
       }
   }
 

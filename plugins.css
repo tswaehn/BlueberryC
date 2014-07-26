@@ -56,6 +56,15 @@
   min-height: 80px;
 }
 
+#sketch_code {
+   display: block;
+   unicode-bidi: embed;
+   font-family: monospace;
+   white-space: pre;
+   margin:10px;
+   padding:10px;
+   border:thin dashed gray;
+}
 
 #thumbnail {
   width:32px;

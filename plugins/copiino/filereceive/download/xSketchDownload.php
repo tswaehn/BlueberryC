@@ -3,8 +3,6 @@
 class SketchDownload {
   
   
-  
-  
   /*
       parse all files and folders and create sketch objects
       
@@ -20,12 +18,11 @@ class SketchDownload {
           if ($item != '.' && $item != '..') {
                   if( $item->isDir() ) {
                           // call the function on the folder
-                          dir_contents_recursive("$dir/$item", $result);
+                          $this->dir_contents_recursive("$dir/$item", $result);
                   } else {
                       $filename = $item->getFilename();
                       if (empty($sketch)){
                         $sketch = new Sketch();
-                        $sketch->timestamp= filemtime( $dir );
                       }
                       
                       // print files
@@ -40,13 +37,18 @@ class SketchDownload {
                         $sketch->description = $ini->getConfig("info", "description" );
                         $sketch->thumbnail = $ini->getConfig("info", "thumbnail" );
                       }
-                      if ($filename == "md5.sum"){
-                        $sketch->md5sum = file_get_contents( $file );                 
+                      if ($filename == "sketch-info.json"){
+                        $contents = file_get_contents( $file );
+                        $info = json_decode( $contents, true);
+                        $sketch->md5sum=$info["md5sum"];                        
+                        $sketch->parentMD5=$info["parentMD5"];
+                        $sketch->timestamp=$info["timestamp"];
+                        $sketch->user=$info["user"];
+                        $sketch->revision=$info["revision"];
+                        $sketch->commitMsg= $info["commitMsg"];
+                        $sketch->commitType= $info["commitType"];
                       }
-                      if ($filename == "md5.parent.sum"){
-                        $sketch->parentMd5 = file_get_contents( $file );                      
-                      }
-                        
+
                   }
           }
       }
@@ -69,13 +71,23 @@ class SketchDownload {
     
     \return: tree of sketches (sketch objects)
   */
-  function readServerSideSketches( $filter = ""){
+  function readServerSideSketches( $user="", $filter=""){
     
-    // get the complete file structure and create sketch objects
-    $sketches=dir_contents_recursive( UPLOAD_DIR );
+    // decide user space to search at
+    if( empty($user)){
+      echo "search globally";
+      // get the complete file structure and create sketch objects
+      $sketches= $this->dir_contents_recursive( UPLOAD_DIR.'/' );
 
+    } else {
+      echo "search for user ".$user;
+      // get the complete file structure and create sketch objects
+      $sketches= $this->dir_contents_recursive( UPLOAD_DIR.'/'.$user.'/' );
+    }
+    
     // do some prefiltering
     if (!empty($filter)){
+      echo "filtering for ".$filter;
     
       // filter by selected sketch
       foreach ($sketches as $key=>$sketchTest){
@@ -85,6 +97,8 @@ class SketchDownload {
         }
       
       }    
+    } else {
+      echo "no filter active";
     }
     
     // connect the sketches by finding parents and their childs
@@ -131,16 +145,82 @@ class SketchDownload {
   
 
  
-  function returnProjectsOverview( $filter = "" ){
-
+  function returnProjectsOverview( $scope, $user, $filter){
+  
+    // remove user information if we are on global scope
+    if($scope == "global"){
+      $user="";
+    }
+    
     // read all sketches 
-    $sketches = $this->readServerSideSketches($filter);
+    $sketches = $this->readServerSideSketches($user, $filter);
 
-    jsonCurlReturn( $sketches );
+    return $sketches;
     
   }
   
   
+  
+  
+  
+  function returnSketch( $user, $sketch, $md5sum ){
+    
+    $data= array();
+    
+    // check if all data is available
+    if (empty($user) || empty($sketch) || empty($md5sum) ){
+      return $data;
+    }
+  
+    // set default fields
+    $data["user"]= $user;
+    $data["sketch"]= $sketch;
+    $data["md5sum"]= $md5sum;
+    $data["result"]= "";
+    
+    // check for sketch folder
+    $folder= UPLOAD_DIR.$user."/".$sketch."/".$md5sum."/";
+    if (!file_exists($folder)){
+      $data["result"]= "folder does not exist". $folder;
+      return $data;
+    }
+    
+    // read sketch info
+    $infofile=$folder."sketch-info.json";
+    if (file_exists($infofile)){
+      $info = json_decode( file_get_contents( $infofile ), true );
+      // remove folder information
+      foreach( $info["files"] as $key=>$filename ){
+        $filename= basename( $filename );
+        $info["files"][$key]=$filename;
+      }
+      
+      $data["timestamp"]= $info["timestamp"];
+      $data["revision"]= $info["revision"];
+      $data["commitMsg"]= $info["commitMsg"];
+      $data["commitType"]= $info["commitType"];
+      $data["files"]= $info["files"];
+      
+      
+      // go through the file list and add each file 
+      foreach( $info["files"] as $filename){
+        $fullfile= utf8_encode($folder. $filename);
+        if ( file_exists( $fullfile )){
+          $contents= file_get_contents( $fullfile );
+          $data[$filename]= base64_encode( $contents );
+        } else {
+          $data[$filename]= "does not exist";
+        }
+      }
+      $data["result"]="thanks";
+    }
+    
+    
+    
+    
+  
+    return $data;
+  }
  
    
 }

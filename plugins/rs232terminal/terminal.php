@@ -1,7 +1,5 @@
 <?php
 
-  include( PLUGIN_DIR.'js_update.php' );
-
   include( PLUGIN_DIR.'server-talk.php' );
   
   $sendToServer=getUrlParam('sendToServer');

@@ -1,11 +1,6 @@
 <?php
 
-  include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
-  include( PLUGIN_DIR.'sync/xSketchUpload.php');
-  
-  include( PLUGIN_DIR."/config/jsonSettings.php");
-  include( PLUGIN_DIR."/config/copiinoSettings.php" );
-    
+
   
 
 class Browser {
@@ -83,7 +78,7 @@ class Browser {
     }    
       
     // create config file for new sketch
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
     $config->setConfig('info', 'caption', $caption );
     $config->setConfig('info', 'thumbnail', $sketch.'/'.$thumbnail );
     $config->setConfig('info', 'wiring', $sketch.'/'.$wiring );
@@ -148,7 +143,7 @@ class Browser {
   function renderSketchShort( $sketch ){
     
     
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
@@ -160,7 +155,7 @@ class Browser {
     
     $options = '<a href="'.linkToMe('view').'&sketch='.$sketch.'">view</a> ';
     $options.= '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
-    $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=upload">upload</a> ';
+    $options.= '<a href="'.linkToMe('upload').'&sketch='.$sketch.'">upload</a> ';
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
     
@@ -180,7 +175,7 @@ class Browser {
   function renderSketch( $sketch ){
     
     
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
@@ -197,7 +192,7 @@ class Browser {
     }
     
     $options = '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
-    $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=upload">upload</a> ';
+    $options.= '<a href="'.linkToMe('upload').'&sketch='.$sketch.'">upload</a> ';
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
 
@@ -237,7 +232,7 @@ class Browser {
   function renderTrashShort( $sketch ){
     
     
-    $config= new SketchConfig( $sketch, true );
+    $config= SketchConfig::loadFromTrashFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
@@ -265,7 +260,7 @@ class Browser {
   
   function setupSketch( $sketch ){
   
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
@@ -341,88 +336,11 @@ class Browser {
 
   }
   
-  function uploadSketch( $sketch ){
-    
-    $sync = new SketchSync();
-    $config= new SketchConfig( $sketch );
 
-    $caption = $config->getConfig('info','caption');
-    $description = $config->getConfig('info','description');
-    $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
-    $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
-    $cpp = $config->getConfig('cpp','file');
-
-    $md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
-    $old_md5sum='0';
-    // display old md5sum
-    if (is_File($md5File)){
-      $old_md5sum= file_get_contents( $md5File );
-      echo 'old md5 is: '.$old_md5sum.'<br>';
-    }
-    
-    echo '<pre>';
-    echo 'uploading '.$caption.' ('.$sketch.')<br>';
-      
-    $files = array();
-    $files[] = $config->getFilename();
-    $files[] = PLUGIN_DIR.'sketches/'.$sketch.'/'.'default.ino';
-    $files[] = $thumbnail;
-    $files[] = $wiring ;
-    foreach ($cpp as $file ){
-      $files[] = PLUGIN_DIR.'sketches/'.$sketch.'/'.$file;
-    }
-
-    // load copiino account settings
-    $settings = new CopiinoSettings();
-    $user= $settings->getConfig( "user" );
-    $email = $settings->getConfig( "email" );
-    $pwd = $settings->getConfig( "pwd" );
-
-    $args = array();
-    $args['user']= $user;
-    $args['email']= $email;
-    $args['pwd']= $pwd;
-    
-    $args['sketch']=$sketch;
-    $args['parentmd5']=$old_md5sum;
-    
-    
-    // send files and data
-    $result = $sync->sendFiles( $files, $args );
-    
-    if ($result["error"]){
-    
-      echo $result["msg"];
-
-    } else {
-      // parse for the new md5sum
-      if (isset($result["data"]["md5Parent"])){
-      
-        $md5sum = $result["data"]["md5Parent"];
-        
-        if (!empty( $md5sum )){
-          $md5File=  PLUGIN_DIR.'sketches/'.$sketch.'/'.'md5.sum';
-        
-          if (file_put_contents( $md5File, $md5sum ) == false){
-            echo "unable to write to file ".$md5File.'<br>';
-          }	
-          
-          echo 'new md5: '.$md5sum.'<br>';
-        }
-      } else {
-        echo 'error: cannot receive new md5sum<br>';
-      }
-    
-    }
-    
-    
-    echo '</pre>';
-    
-  }
   
   function saveSketchCaption( $sketch ){
 
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
     
     $caption = getUrlParam( 'caption' );
     
@@ -442,7 +360,7 @@ class Browser {
     
     if ($file){
 
-      $config= new SketchConfig( $sketch );
+      $config= SketchConfig::loadFromSketchFolder( $sketch );
       
       $thumbnail = $sketch.'/'.$file['filename'];
       
@@ -462,7 +380,7 @@ class Browser {
   }
   function saveSketchDescription( $sketch ){
 
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
     
     $description = getUrlParam( 'description' );
     
@@ -482,7 +400,7 @@ class Browser {
     
     if ($file){
 
-      $config= new SketchConfig( $sketch );
+      $config= SketchConfig::loadFromSketchFolder( $sketch );
       
       $wiring = $sketch.'/'.$file['filename'];
       
@@ -509,7 +427,7 @@ class Browser {
     
     if ($file){
 
-      $config= new SketchConfig( $sketch );
+      $config= SketchConfig::loadFromSketchFolder( $sketch );
       
       $cppfile = $file['filename'];
       
@@ -548,7 +466,7 @@ class Browser {
     }
 
     // remove the file from config
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
     // load allready existing files
     $filelist=$config->getConfig('cpp','file');
     

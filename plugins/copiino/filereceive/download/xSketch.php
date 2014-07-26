@@ -3,14 +3,16 @@
  class Sketch {
     
     public $sketch;
-    public $caption;
+    public $parentMD5;
     public $md5sum;
-    public $parentMd5;
-    public $thumbnail;
-    public $description;
     public $timestamp;
+    public $user;
+    public $revision;
+    public $caption;
+    public $thumbnail;
+    public $commitMsg;
+    public $description;
     public $contributors;
-    
     
     public $children;
     
@@ -20,7 +22,7 @@
     }
     
     function addSketch( $sketch ){
-      if (strcmp( $this->md5sum,$sketch->parentMd5)==0){
+      if (strcmp( $this->md5sum,$sketch->parentMD5)==0){
 	// well this is obviously the parent
 	$this->children[] = $sketch;
 	return 1;

@@ -1,6 +1,6 @@
 <?php
 
-  include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
+ // include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
   
 class Compiler {
 
@@ -112,7 +112,7 @@ class Compiler {
   function edit($sketch){
 
   
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
