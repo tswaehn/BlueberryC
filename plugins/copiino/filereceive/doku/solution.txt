@@ -1,0 +1,72 @@
+    //http://stackoverflow.com/questions/23413899/php-sorting-moving-objects-and-join-remove-same-objects
+/*
+    $test = array( "a", "b", "c", "b", "c" );
+    
+    foreach ($test as $keyA=>$valueA){
+      
+      if (!isset($test[$keyA])){
+        continue;
+      }
+      echo "I am at item ".$valueA." [".$keyA."]<br>";
+      
+      foreach ($test as $keyB=>$valueB){
+        if (!isset($test[$keyB])){
+          continue;
+        }      
+        if ($keyA != $keyB){
+          // if not comparing to itself
+          echo "=> comparing to ".$valueB." [".$keyB."]";
+          if (strcmp($valueA,$valueB)==0){
+            // but is the same string, ... join and remove
+            echo "-- joined and removed [".$keyB."]";
+            $test[$keyA]=$valueA.$valueB;
+            unset($test[$keyB]);          
+          }
+          echo "<br>";
+        }
+      }
+    
+    }
+    */
+
+    
+    
+Thanks to CBroe the solution is simple.
+
+Just need to access my array by reference. So I could edit my items in the original array. Marking the used/deleted items with "NULL" makes them special. Of course they have to be treated special (skipped) in the foreach loop.
+
+The final code will be
+
+    
+    $test = array( "a", "b", "c", "b", "c" );
+    
+    foreach ($test as $keyA=>&$valueA){
+      
+      if (empty($valueA)){
+        continue;
+      }
+      echo "I am at item ".$valueA." [".$keyA."]<br>";
+      
+      foreach ($test as $keyB=>&$valueB){
+        if (empty($valueB)){
+          continue;
+        }      
+        if ($keyA != $keyB){
+          // if not comparing to itself
+          echo "=> comparing to ".$valueB." [".$keyB."]";
+          if (strcmp($valueA,$valueB)==0){
+            // but is the same string, ... join and remove
+            echo "-- joined and removed [".$keyB."]";
+            $test[$keyA]=$valueA.$valueB;
+            $test[$keyB]=null;	  
+          }
+          echo "<br>";
+        }
+       }
+    
+   }
+
+If needed the "NULL" marked elements can be removed afterwards
+
+    $test = array_filter( $test );
+
