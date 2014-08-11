@@ -62,17 +62,10 @@
 ./plugins/copiino/sketches/
 ./plugins/copiino/trash/
 ./plugins/copiino/sketches/blinky
-./plugins/copiino/sketches/blinky/image.jpg
-./plugins/copiino/sketches/blinky/wiring.jpg
 ./plugins/copiino/sketches/blinky/default_thumbnail.jpg
-./plugins/copiino/sketches/blinky/makefile
 ./plugins/copiino/sketches/blinky/test.h
-./plugins/copiino/sketches/blinky/cartoon-candle-10.gif
 ./plugins/copiino/sketches/blinky/sketch.ini
 ./plugins/copiino/sketches/blinky/test.cpp
 ./plugins/copiino/sketches/blinky/default.ino
 ./plugins/copiino/sketches/blinky/md5.sum
-./plugins/copiino/sketches/blinky/Elephant 128x128.png
-./plugins/copiino/sketches/blinky/360e power 128x128.png
 ./plugins/copiino/sketches/blinky/Arduino_Stepper_two_wire_bb.png
-./plugins/copiino/sketches/blinky/LCD_bb.png
