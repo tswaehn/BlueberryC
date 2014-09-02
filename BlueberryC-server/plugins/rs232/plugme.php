@@ -2,12 +2,11 @@
   
   include('./plugins/rs232/CommandInterface.php');
   
-  define('DEFAULT_HIST_LEN', 20 );
+  define('DEFAULT_HIST_LEN', 1000 );
   
   class Rs232 extends SocketTask {
     
     protected $fp;
-    protected $ci;
     protected $history;
     protected $hist_remain;
     protected $hist_size;
@@ -19,10 +18,9 @@
       $this->hist_remain="";
       $this->hist_len=DEFAULT_HIST_LEN;
       
-      $this->ci = new CommandInterface();
       
-      //$this->fp = @fsockopen( 'raspi', 10000, $errno, $errstr, 10 );
       $this->fp = @fsockopen( 'localhost', 10000, $errno, $errstr, 10 );
+      //$this->fp = @fsockopen( '192.168.5.130', 10000, $errno, $errstr, 10 );
       
       if (!$this->fp){
 	$this->log( "error no socket" );
@@ -34,6 +32,11 @@
       
       
      $this->startLogging( "/usr/share/BlueberryC/plugins/rs232/logs/");
+    }
+    
+    function idle(){
+      // when in idle, ... just read new data
+      $this->rx();
     }
     
     function timestamp(){
@@ -82,48 +85,39 @@
 
       // remove all \r
       $str = preg_replace("/\r/", "", $str);
-      // glue the remaining parts toghether with received data
-      $str = $this->hist_remain.$str;
 
-      // split by \n
-      $cmds = preg_split( "/\n/", $str, -1, PREG_SPLIT_NO_EMPTY );
-
-      // get the cmd count
-      $len = count( $cmds );
-      $i=0;
-      // walk through cmds
-      foreach ($cmds as $cmd){
-
-        if ($isRx){
-          $this->logToFile("RX>".$cmd );
-
-          // skip the last one
-          if ($i <= ($len-1)){
-            // check only (len-1) cmds as the last cmd might be incomplete
-
-            if ($isRx){
-              $ret=$this->ci->execute( $cmd );
-              if ($ret != ""){
-                $cmd .= " (".$ret.")"; 
-              }
-            } else {
-              //
-            }
-            
-            
-            // add information to history
-            $this->history[] = "RX>".$cmd;
-            
-          } else {
-            $this->hist_remain = $cmd;
-          }
-          
-        } else {
+      
+      if (!$isRx){
+        // split by \n
+        $cmds = preg_split( "/\n/", $str );
+        foreach ($cmds as $cmd){
           $cmd = "TX>". $cmd;
           
           $this->logToFile( $cmd );
           // add information to history
           $this->history[] = $cmd;
+        }
+      }
+      
+      if ($isRx){
+      
+        // glue the remaining parts toghether with received data
+        $str = $this->hist_remain.$str;
+        $this->hist_remain= "";
+
+        // split by \n
+        $cmds = preg_split( "/\n/", $str );
+        
+        // get the last one;
+        $this->hist_remain= array_pop( $cmds );
+        
+        // walk through cmds
+        foreach ($cmds as $cmd){
+
+            // add information to history
+            $this->history[] = "RX>".$cmd;
+            $this->logToFile("RX>".$cmd );
+            
           
         }
       
@@ -139,11 +133,7 @@
       
     }
     
-    function idle(){
-      // when in idle, ... just read new data
-      $this->rx();
-    }
-    
+
     function tx( $text ){
 
     
@@ -182,7 +172,7 @@
       
       if ($this->fp){
       
-	stream_set_timeout($this->fp, 0, 100 );
+	stream_set_timeout($this->fp, 0, 50 );
 	$info = stream_get_meta_data($this->fp);
 	
 	while ((!feof($this->fp)) && (!$info['timed_out'])) {
@@ -196,42 +186,28 @@
       }
     }
     
-    function update( $history_len ){
+    function update( $history_len=DEFAULT_HIST_LEN ){
 
       // check value
-      if ($history_len==""){
-	$history_len=0;
+      if ($history_len<= 0){
+	$history_len=DEFAULT_HIST_LEN;
       }
 	
-      // set new len
-      if ($history_len > 0){
-	$this->log("new hist len ".$history_len );
-	$this->hist_len=$history_len;
+
+      $count= count($this->history);
+      $start= $count-$history_len;
+      if ($start<0){
+        $start= 0;
       }
       
       // return data
-      foreach ($this->history as $line){
+      for ($i=$start; $i<$count; $i++){
+        $line= $this->history[$i];
 	$this->sendData( $line );
       }
     
     }
     
-    function getSensorValues(){
-    
-      $str=$this->ci->getSensorValues();
-      
-      $this->sendData( $str );
-      
-    }
-    
-    function getSensorLog(){
-    
-      $str=$this->ci->getSensorLog();
-      
-      $this->sendData( $str );
-      
-    }
-        
   
     function interpreter( $action, $str ){
       $this->log("interpreting ".$action);
@@ -245,8 +221,6 @@
 	case 'tx': $this->tx($str); break;
 	case 'rx': $this->rx(); break;
 	case 'update': $this->update( $str ); break;
-	case 'sensor': $this->getSensorValues(); break;
-	case 'sensorlog': $this->getSensorLog(); break;
 	
 	default: $this->sendData("wrong format");
       }

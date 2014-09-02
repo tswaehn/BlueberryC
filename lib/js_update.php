@@ -2,11 +2,15 @@
   
   $ajaxId = 0;
   
-  function insertUpdateScript( $updateUrl, $tag ){
+  function insertUpdateScript( $updateUrl, $tag, $postProcessFunction=null ){
   
   global $ajaxId;
   
   $ajaxId++;
+  
+  if ($postProcessFunction==null){
+    $postProcessFunction= "defaultPostProcessFunction";
+  }
   
   echo '<script type="text/javascript">
 
@@ -76,13 +80,20 @@
               
             if (xmlHttp_'.$ajaxId.'.readyState==4) {
               if (xmlHttp_'.$ajaxId.'.status == 200 || xmlHttp_'.$ajaxId.'.status == 400){
-                document.getElementById(updateTarget_'.$ajaxId.').innerHTML=xmlHttp_'.$ajaxId.'.responseText;
+                // get response value
+                responseText= xmlHttp_'.$ajaxId.'.responseText;
+                // call post process function
+                '.$postProcessFunction.'( responseText );
                 complete_'.$ajaxId.'=1;
 
               } else {
                 // ... do nothing
               }
             }
+        }
+        
+        function defaultPostProcessFunction( responseText ){
+          document.getElementById(updateTarget_'.$ajaxId.').innerHTML=responseText;
         }
 
         </script>';  

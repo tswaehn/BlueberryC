@@ -15,25 +15,17 @@
   echo '<input type="submit" value="send">';
   echo '</form>';
   
-  insertUpdateScript( PLUGIN_DIR.'updateTerminal.php', 'log');  
+  insertUpdateScript( PLUGIN_DIR.'updateTerminal.php?lines=20', 'log');  
   
   
   // send only if there is data 
   if ($sendToServer != ""){
-  
-    $fp = @fsockopen( 'localhost', 9000, $errno, $errstr, 10 );
     
-    if (!$fp){
-      echo "error no socket <br>";
-      echo $errno. " " .$errstr;
-
-    } else {
-
-      $obj=addTask('rs232', 'tx', $sendToServer );
-      transferDataToSocket( $fp, encodeRequest( $obj )  );
-    }
+    $serverTalk= new ServerTalk();
     
-    fclose( $fp );
+
+    $obj=addTask('rs232', 'tx', $sendToServer );
+    $serverTalk->transferDataToSocket( encodeRequest( $obj )  );
 
   }  
   

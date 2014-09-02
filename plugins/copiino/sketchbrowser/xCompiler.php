@@ -95,18 +95,58 @@ class Compiler {
     
     $text = $this->loadFromFile($file); 
     
+    echo '<div id="myTextAreaxx"></div>';
+
+    
     echo '<form action="'.linkToMe('edit').'&sketch='.$sketch.'" method="post">';
     echo '<button type="sbumit" name="do" value="cancel">Cancel</button>';
     echo '<button type="submit" name="do" value="save">Save</button>';
     echo '<button type="submit" name="do" value="compile">Compile</button>';    
     echo '<button type="submit" name="do" value="compile_and_run">Compile and Run ...</button>';
-    echo '<textarea name="text" cols="80" rows="25">';
+    echo '<textarea id="myTextArea" name="text" cols="50" rows="20" >';
 
     echo $text;
     
     echo '</textarea>';
+    
+    
     echo '</form>';   
-  
+    
+
+      echo '<!-- Create a simple CodeMirror instance -->
+      
+            <script src="./3rdParty/codemirror-4.4/lib/codemirror.js"></script> 
+            <link rel="stylesheet" type="text/css" href="./3rdParty/codemirror-4.4/lib/codemirror.css">
+            <script src="./3rdParty/codemirror-4.4/mode/clike/clike.js"></script> 
+            <script src="./3rdParty/codemirror-4.4/mode/javascript/javascript.js"></script>
+            <script src="./3rdParty/codemirror-4.4/mode/php/php.js"></script> 
+
+
+            <script >
+            
+              
+              var config= {
+                          lineNumbers: true,
+                          mode: "clike",
+                          tabSize: 2,
+                          autofocus: true
+                          };
+              /*
+              var editor = CodeMirror( function(elt) {
+                  myTextArea.parentNode.replaceChild(elt, myTextArea);
+                  }, config );
+                  */
+                  
+              var editor = CodeMirror.fromTextArea( myTextArea, config );
+
+              
+            </script>';
+/*
+    <script src="./3rdParty/codemirror-4.4/mode/clike/clike.js"></script>
+    
+            <script src="./3rdParty/codemirror-4.4/mode/php/php.js"></script>            
+    */
+    
   }
   
   function edit($sketch){

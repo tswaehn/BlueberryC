@@ -28,25 +28,19 @@
   if ($action==""){
     $action="update";
   }
-
- 
-  $fp = @fsockopen( 'localhost', 9000, $errno, $errstr, 10 );
-  
-  if (!$fp){
-    echo "error no socket <br>";
-    echo $errno. " " .$errstr;
-
-  } else {
-    
-    $obj=addTask('rs232', $action, '');
-
-    $data = transferDataToSocket( $fp, encodeRequest( $obj )  );
-    
-    echo $data;
-      
-
+  $lines= getUrlParam( "lines" );
+  if (empty($lines)){
+    $lines= 100;
   }
   
-  fclose( $fp );
+
+  $serverTalk= new ServerTalk();
+
+  $serverTalk->addTask('rs232', $action, $lines);
+
+  $response = $serverTalk->transferSendObjectToSocket();
+  
+  echo $response;
+      
 
 ?>
