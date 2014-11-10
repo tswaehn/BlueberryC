@@ -24,8 +24,8 @@
     $serverTalk= new ServerTalk();
     
 
-    $obj=addTask('rs232', 'tx', $sendToServer );
-    $serverTalk->transferDataToSocket( encodeRequest( $obj )  );
+    $serverTalk->addTask('rs232', 'tx', $sendToServer );
+    $serverTalk->transferSendObjectToSocket();
 
   }  
   

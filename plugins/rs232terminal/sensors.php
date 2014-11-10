@@ -30,8 +30,8 @@
   
   // plot options
   $options= "{ 
-        title:'Exponential Line', 
-        axes:{yaxis:{min:-90, max:90}}, 
+        title:'Sensor Chart', 
+        axes:{yaxis:{min:-100, max:100}}, 
         seriesDefaults:{showMarker:false, lineWidth:2, lineShadow:false },
         series:[{color:'#5FAB78' }]
         }";
@@ -112,7 +112,10 @@
               values.push( "in:"+line );
               tokens= line.split(" ");
 
-              //addData( Math.floor((Math.random() * 180) -90)  );
+              document.getElementById( "log" ).innerHTML=tokens[1]+" "+tokens[5];
+  
+              //addData( 0, Math.floor((Math.random() * 180) -90)  );
+              //addData( 1, Math.floor((Math.random() * 180) -90)  );
               addData( 0, tokens[1] );
               addData( 1, tokens[5] );
               //values.push( new Array(i, tokens[1]) );
@@ -123,7 +126,7 @@
           }
           
           //text=values.join("\n");          
-          //document.getElementById( "log" ).innerHTML=text;
+          //document.getElementById( "log" ).innerHTML=tokens;
           
           // create graph
           //document.getElementById( "chartdiv" ).innerHTML="Waiting for data";
