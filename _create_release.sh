@@ -118,7 +118,7 @@ mkdir -p $packagedir
   
 
   # include only default plugins !!
-  find ./plugins/about/ -iname "*" -print >> $filelist
+  find ./plugins/upgrade/ -iname "*" -print >> $filelist
   find ./plugins/controls/ -iname "*" -print >> $filelist
   find ./plugins/home/ -iname "*" -print >> $filelist 
   find ./plugins/missing/ -iname "*" -print >> $filelist

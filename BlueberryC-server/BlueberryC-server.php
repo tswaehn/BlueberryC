@@ -10,7 +10,8 @@
   set_time_limit (0);
 
   // Set the ip and port we will listen on
-  $address = 'localhost';
+  //$address = '127.0.0.1';
+  $address = '0.0.0.0';
   $port = 9000;
   $max_clients = 10;
 

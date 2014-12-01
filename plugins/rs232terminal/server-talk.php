@@ -1,34 +1,86 @@
 <?php
 
-
-  function addTask(  $plugin, $action, $text, $obj=array()  ){
+  //define("BLUEBERRY_SERVER", "192.168.5.130" );
+  define("BLUEBERRY_SERVER", "localhost" );
   
-    $obj[] = array( $plugin => array( $action => $text ) );
+  define("SERVER_TALK_ERROR", "error no socket" );
+
+class ServerTalk {
+
+  private $fp;
+  private $targetUrl;
+  private $sendObject;
+  
+  // 
+  function __construct( $targetUrl= BLUEBERRY_SERVER){
+
+    $this->targetUrl= $targetUrl;
+    $this->sendObject= array();
+
+    $this->fp = @fsockopen( $this->targetUrl, 9000, $errno, $errstr, 10 );
     
-    return $obj;
+    if (!$this->fp){
+      echo SERVER_TALK_ERROR."<br>";
+      echo $errno. " " .$errstr;
+      return;
+    }
+  
+    echo "socket connection created\n";
+    
+    
   }
   
-  function encodeRequest( $obj ){
+  function __destruct(){
+
+    if (!$this->fp){
+      echo SERVER_TALK_ERROR."<br>";
+      return;
+    }
+  
     
-    $request = json_encode( $obj );
+    fclose( $this->fp );
+    echo "socket connection destroyed\n";
+      
+  }
+  
+
+  function addTask(  $plugin, $action, $text  ){
+    
+    $this->sendObject[]= array( $plugin => array( $action => $text ) );
+
+  }
+  
+  function encodeRequest(){
+    
+    $request = json_encode( $this->sendObject );
   
     return $request;
   }
 
-  function transferDataToSocket( $fp, $data ){
-  
-    $data = "<CONTENT>".$data."</CONTENT>";
+  function transferSendObjectToSocket(){
 
-    // send complete message
-    fwrite( $fp, $data  );
+  
+    // check for open socket
+    if (!$this->fp){
+      return SERVER_TALK_ERROR;
+    }
+  
+    // convert sendObject to String
+    $jsonString= $this->encodeRequest();
+    
+    // add start/end- tags
+    $jsonString = "<CONTENT>".$jsonString."</CONTENT>";
+
+    // send complete message    
+    fwrite( $this->fp, $jsonString  );
 
     // now wait for the result/response
     $response = "";
     do {
       
-      $info = stream_get_meta_data($fp);
+      $info = stream_get_meta_data($this->fp);
 
-      $package = fread( $fp, 10 );
+      $package = fread( $this->fp, 1000 );
       $response .= $package;
       
       $msg_start=strpos( $response, "<RESPONSE>" );
@@ -44,8 +96,10 @@
       //echo $response;
     }
     
+
     return $response;
   }
   
-  
-  ?>
+}
+
+?>

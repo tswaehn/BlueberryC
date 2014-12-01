@@ -155,7 +155,11 @@ class Browser {
     
     $options = '<a href="'.linkToMe('view').'&sketch='.$sketch.'">view</a> ';
     $options.= '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
+    
+    if (defined("DEBUG")){
     $options.= '<a href="'.linkToMe('upload').'&sketch='.$sketch.'">upload</a> ';
+    }
+    
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
     
@@ -192,7 +196,11 @@ class Browser {
     }
     
     $options = '<a href="'.linkToMe('edit').'&sketch='.$sketch.'">edit</a> ';
+    
+    if (defined("DEBUG")){
     $options.= '<a href="'.linkToMe('upload').'&sketch='.$sketch.'">upload</a> ';
+    }
+    
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';
 
