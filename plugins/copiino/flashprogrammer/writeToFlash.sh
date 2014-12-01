@@ -11,9 +11,10 @@ TOOLS_DIR=/usr/share/arduino/hardware/tools
 #stop AVR
 ("$TOOLS_DIR/reset-chip.sh")
 
-# read data
+# write data
+echo "burning data to chip"
 echo "filename is "$filename
-sudo avrdude -c linuxspi -p m1284p -P /dev/spidev0.0 -U flash:r:$filename:i
+sudo avrdude -c linuxspi -p m1284p -P /dev/spidev0.0 -U flash:w:"$filename":i
 #ls -la
 
 #start AVR

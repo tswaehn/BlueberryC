@@ -45,9 +45,10 @@
     $cpu = $stats[7][1];
     $cpuAvg = $stats[2][1];
     //
-    $totalRAM = $stats[8][1];
-    $usedRAM = $stats[8][3];
-    $freeRAM = $stats[8][5];
+    $unit= $stats[8][0];
+    $totalRAM = $stats[8][2].$unit;
+    $usedRAM = $stats[8][4].$unit;
+    $freeRAM = $stats[8][6].$unit;
     
     echo "current time ".$time." uptime ".$uptime." with ".$users." users connected<br>";
     echo "cpu ".$cpu." (average ".$cpuAvg.")<br>";

@@ -4,11 +4,12 @@
   Turns on and off all LEDs 
  
   This example code is in the public domain.
- */
+
+*/
 
 
-
-
+// this is a demo for how to import libs
+// blinkLED20() comes from the test.cpp lib
 #include "test.h"
 
 // Pin 13 has an LED connected on most Arduino boards.

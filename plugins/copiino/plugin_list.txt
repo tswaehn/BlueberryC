@@ -13,14 +13,7 @@
 ./plugins/copiino/flashprogrammer/writeDefaultFuses.sh
 ./plugins/copiino/flashprogrammer/prog.php
 ./plugins/copiino/flashprogrammer/filesStorage
-./plugins/copiino/flashprogrammer/filesStorage/downloaded__1383262286.hex
-./plugins/copiino/flashprogrammer/filesStorage/arduino_blinky.hex
-./plugins/copiino/flashprogrammer/filesStorage/Demo UART 500000.hex
-./plugins/copiino/flashprogrammer/filesStorage/Demo UART.hex
-./plugins/copiino/flashprogrammer/filesStorage/Demo UART 1000000.hex
-./plugins/copiino/flashprogrammer/filesStorage/Blinky.hex
-./plugins/copiino/flashprogrammer/filesStorage/Demo UART 115200.hex
-./plugins/copiino/flashprogrammer/filesStorage/Backup from Running blink.hex
+./plugins/copiino/flashprogrammer/filesStorage/blinky.hex
 ./plugins/copiino/flashprogrammer/readName.php
 ./plugins/copiino/flashprogrammer/plugme.php
 ./plugins/copiino/flashprogrammer/filesStorage.php
@@ -32,14 +25,6 @@
 ./plugins/copiino/flashprogrammer/selectAction.php
 ./plugins/copiino/flashprogrammer/updateLog.php
 ./plugins/copiino/flashprogrammer/filesStorageLoad.php
-./plugins/copiino/flashprogrammer/trash
-./plugins/copiino/flashprogrammer/trash/downloaded__1383261668.hex
-./plugins/copiino/flashprogrammer/trash/downloaded__1382990232.hex
-./plugins/copiino/flashprogrammer/trash/downloaded__1382967653.hex
-./plugins/copiino/flashprogrammer/trash/Home2.desktop
-./plugins/copiino/flashprogrammer/trash/downloaded__1382963363.hex
-./plugins/copiino/flashprogrammer/trash/downloaded__1382990647.hex
-./plugins/copiino/flashprogrammer/trash/hallo_welt.png
 ./plugins/copiino/flashprogrammer/readMove.php
 ./plugins/copiino/flashprogrammer/burn.php
 ./plugins/copiino/sketchbrowser
@@ -62,10 +47,43 @@
 ./plugins/copiino/sketches/
 ./plugins/copiino/trash/
 ./plugins/copiino/sketches/blinky
+./plugins/copiino/sketches/blinky/build-cli
+./plugins/copiino/sketches/blinky/build-cli/test.d
+./plugins/copiino/sketches/blinky/build-cli/main.o
+./plugins/copiino/sketches/blinky/build-cli/default.o
+./plugins/copiino/sketches/blinky/build-cli/Tone.o
+./plugins/copiino/sketches/blinky/build-cli/test.o
+./plugins/copiino/sketches/blinky/build-cli/blinky.hex
+./plugins/copiino/sketches/blinky/build-cli/blinky.elf
+./plugins/copiino/sketches/blinky/build-cli/default.d
+./plugins/copiino/sketches/blinky/build-cli/wiring_digital.o
+./plugins/copiino/sketches/blinky/build-cli/WMath.o
+./plugins/copiino/sketches/blinky/build-cli/Stream.o
+./plugins/copiino/sketches/blinky/build-cli/Blink.d
+./plugins/copiino/sketches/blinky/build-cli/new.o
+./plugins/copiino/sketches/blinky/build-cli/HardwareSerial.o
+./plugins/copiino/sketches/blinky/build-cli/CDC.o
+./plugins/copiino/sketches/blinky/build-cli/HID.o
+./plugins/copiino/sketches/blinky/build-cli/libcore.a
+./plugins/copiino/sketches/blinky/build-cli/WString.o
+./plugins/copiino/sketches/blinky/build-cli/wiring_pulse.o
+./plugins/copiino/sketches/blinky/build-cli/USBCore.o
+./plugins/copiino/sketches/blinky/build-cli/WInterrupts.o
+./plugins/copiino/sketches/blinky/build-cli/IPAddress.o
+./plugins/copiino/sketches/blinky/build-cli/wiring.o
+./plugins/copiino/sketches/blinky/build-cli/wiring_shift.o
+./plugins/copiino/sketches/blinky/build-cli/Print.o
+./plugins/copiino/sketches/blinky/build-cli/default.cpp
+./plugins/copiino/sketches/blinky/build-cli/Blink.cpp
+./plugins/copiino/sketches/blinky/build-cli/Blink.o
+./plugins/copiino/sketches/blinky/build-cli/depends.mk
+./plugins/copiino/sketches/blinky/build-cli/wiring_analog.o
 ./plugins/copiino/sketches/blinky/default_thumbnail.jpg
+./plugins/copiino/sketches/blinky/makefile
 ./plugins/copiino/sketches/blinky/test.h
 ./plugins/copiino/sketches/blinky/sketch.ini
 ./plugins/copiino/sketches/blinky/test.cpp
 ./plugins/copiino/sketches/blinky/default.ino
 ./plugins/copiino/sketches/blinky/md5.sum
-./plugins/copiino/sketches/blinky/Arduino_Stepper_two_wire_bb.png
+./plugins/copiino/sketches/blinky/thumbnail.png
+./plugins/copiino/sketches/blinky/IMG_0605.JPG

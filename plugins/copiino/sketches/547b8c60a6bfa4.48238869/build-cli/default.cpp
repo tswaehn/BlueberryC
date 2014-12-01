@@ -6,6 +6,11 @@
   serial port 1. 
  
   This example code is in the public domain.
+
+	by
+  sven@copiino.cc
+  01.dec.2014
+  
  */
  
 // define LED20
