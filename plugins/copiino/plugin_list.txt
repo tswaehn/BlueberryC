@@ -68,4 +68,4 @@
 ./plugins/copiino/sketches/blinky/test.cpp
 ./plugins/copiino/sketches/blinky/default.ino
 ./plugins/copiino/sketches/blinky/md5.sum
-./plugins/copiino/sketches/blinky/Arduino_Stepper_two_wire_bb.png
+./plugins/copiino/sketches/blinky/IMG_0605.JPG

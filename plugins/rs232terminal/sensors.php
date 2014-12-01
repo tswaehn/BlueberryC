@@ -43,7 +43,7 @@
   
   echo '
         MAX_INDEX=200;
-        CHANNEL_COUNT= 2;
+        CHANNEL_COUNT= 3;
         
         
         var dataArray=null;
@@ -112,12 +112,13 @@
               values.push( "in:"+line );
               tokens= line.split(" ");
 
-              document.getElementById( "log" ).innerHTML=tokens[1]+" "+tokens[5];
+              document.getElementById( "log" ).innerHTML=tokens[1]+" "+tokens[2]+" "+tokens[3];
   
               //addData( 0, Math.floor((Math.random() * 180) -90)  );
               //addData( 1, Math.floor((Math.random() * 180) -90)  );
               addData( 0, tokens[1] );
-              addData( 1, tokens[5] );
+              addData( 1, tokens[2] );
+              addData( 2, tokens[3] );              
               //values.push( new Array(i, tokens[1]) );
 
             } else {
