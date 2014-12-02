@@ -1,0 +1,15 @@
+./plugins/rs232terminal/_patch/remserial
+./plugins/rs232terminal/_patch/remseriald
+./plugins/rs232terminal/_patch/rpi-serial-console
+./plugins/rs232terminal/_patch/remserial.src
+./plugins/rs232terminal/_patch/remserial.src/remserial.o
+./plugins/rs232terminal/_patch/remserial.src/remserial
+./plugins/rs232terminal/_patch/remserial.src/start_remserial.old
+./plugins/rs232terminal/_patch/remserial.src/start_remserial.sh
+./plugins/rs232terminal/_patch/remserial.src/stty.o
+./plugins/rs232terminal/_patch/remserial.src/stty.c
+./plugins/rs232terminal/_patch/remserial.src/remserial.c
+./plugins/rs232terminal/_patch/remserial.src/README.txt
+./plugins/rs232terminal/_patch/remserial.src/Makefile
+./plugins/rs232terminal/setup_plugin.sh
+./plugins/rs232terminal/plugin_rs232terminal.tar.gz

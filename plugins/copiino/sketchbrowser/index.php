@@ -1,5 +1,7 @@
 <?php
   
+  include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
+
   $action=getAction();
   
   switch( $action ){
@@ -9,6 +11,8 @@
     case 'compile': include( PLUGIN_DIR.'sketchbrowser/compile.php');break;
     case 'browse': include( PLUGIN_DIR.'sketchbrowser/browse.php');break;
     case 'trash': include( PLUGIN_DIR.'sketchbrowser/trash.php');break;
+    
+    case 'upload': include( PLUGIN_DIR.'sync/upload.php');break;
   
   
     default:

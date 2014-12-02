@@ -1,6 +1,6 @@
 <?php
 
-  include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
+ // include( PLUGIN_DIR.'sketchbrowser/xSketchConfig.php');
   
 class Compiler {
 
@@ -80,35 +80,86 @@ class Compiler {
     
   }
   
+  function compileAndRun($sketch, $text){
+    
+    $this->saveToFile( $sketch, $text );
+    $inoFile = $this->lookForInoFile($sketch);
+    
+    startProcess( PLUGIN_DIR.'sketchbrowser/execute_make_and_run.sh \''.$sketch.'\' \''.$inoFile.'\'', getUrlParam('pageId'), '', 'x', 0 );
+    
+  }
+  
   function editor($sketch){
     
     $file = $this->lookForInoFile($sketch);
     
     $text = $this->loadFromFile($file); 
     
+    echo '<div id="myTextAreaxx"></div>';
+
+    
     echo '<form action="'.linkToMe('edit').'&sketch='.$sketch.'" method="post">';
-    echo '<textarea name="text" cols="80" rows="25">';
+    echo '<button type="sbumit" name="do" value="cancel">Cancel</button>';
+    echo '<button type="submit" name="do" value="save">Save</button>';
+    echo '<button type="submit" name="do" value="compile">Compile</button>';    
+    echo '<button type="submit" name="do" value="compile_and_run">Compile and Run ...</button>';
+    echo '<textarea id="myTextArea" name="text" cols="50" rows="20" >';
 
     echo $text;
     
-    echo '</textarea><p>';
-    echo '<button type="sbumit" name="do" value="cancel">Cancel</button>';
-    echo '<button type="submit" name="do" value="save">Save</button>';
-    echo '<button type="submit" name="do" value="compile">Compile and Run ...</button>';
+    echo '</textarea>';
+    
+    
     echo '</form>';   
-  
+    
+
+      echo '<!-- Create a simple CodeMirror instance -->
+      
+            <script src="./3rdParty/codemirror-4.4/lib/codemirror.js"></script> 
+            <link rel="stylesheet" type="text/css" href="./3rdParty/codemirror-4.4/lib/codemirror.css">
+            <script src="./3rdParty/codemirror-4.4/mode/clike/clike.js"></script> 
+            <script src="./3rdParty/codemirror-4.4/mode/javascript/javascript.js"></script>
+            <script src="./3rdParty/codemirror-4.4/mode/php/php.js"></script> 
+
+
+            <script >
+            
+              
+              var config= {
+                          lineNumbers: true,
+                          mode: "clike",
+                          tabSize: 2,
+                          autofocus: true
+                          };
+              /*
+              var editor = CodeMirror( function(elt) {
+                  myTextArea.parentNode.replaceChild(elt, myTextArea);
+                  }, config );
+                  */
+                  
+              var editor = CodeMirror.fromTextArea( myTextArea, config );
+
+              
+            </script>';
+/*
+    <script src="./3rdParty/codemirror-4.4/mode/clike/clike.js"></script>
+    
+            <script src="./3rdParty/codemirror-4.4/mode/php/php.js"></script>            
+    */
+    
   }
   
   function edit($sketch){
 
   
-    $config= new SketchConfig( $sketch );
+    $config= SketchConfig::loadFromSketchFolder( $sketch );
       
     $caption = $config->getConfig('info','caption');
     $description = $config->getConfig('info','description');
     $thumbnail = PLUGIN_DIR.'sketches/'.$config->getConfig('info','thumbnail');
     $wiring = PLUGIN_DIR.'sketches/'.$config->getConfig('info','wiring');
     $projectID = $config->getConfig('info','sketch');
+    $cpp = $config->getConfig('cpp', 'file');
     
     $serverMD5 = $config->getConfig('info','MD5-Sum');
     $options = '<a href="'.linkToMe('view').'&sketch='.$sketch.'">view</a> ';
@@ -129,16 +180,31 @@ class Compiler {
     echo '<span id="options">'.$options.'</span>';
     echo '<span id="description">'.$description.'</span>';
     
-    // compile output
-    echo '<div id="log"></div>';
-    
     // the editor
     echo '<p>';
     $this->editor($sketch);
-    
+
+    // compile output
+    echo '<div id="log"></div>';
+        
     // the wiring schematic
     echo '<div id="sketch_wiring"><img src="'.$wiring.'" width="400" /></div><br>';
+
+    // additional files
+    echo '<div>';
+    echo 'Additional library files:<br>';
+      //
+      if (!empty($cpp)){
+	echo '<ul>';
+	foreach ($cpp as $file){
+	  $show='<a href="'.PLUGIN_DIR.'sketches/'.$sketch.'/'.$file.'" style="padding-left:10px;padding-right:10px" target="_blank">show</a>';
+	  echo '<li>'.$file.' '.$show.'</li>';
+	}
+	echo '</ul>';
+      }
     echo "</div>";
+
+    echo '</div>';
     
     echo "</div>";
     

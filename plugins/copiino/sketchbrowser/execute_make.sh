@@ -14,6 +14,6 @@ echo "and will compile $file"
 cd "./plugins/copiino/sketches/$sketch"
 
 #ls -la 
-sudo make compile_and_run
+sudo make all
 
  

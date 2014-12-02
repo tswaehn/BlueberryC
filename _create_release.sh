@@ -2,7 +2,7 @@
 #
 # author: sven.ginka@gmail.com
 # date: 23.dec.2013
-# modified: 29.dec.2013
+# modified: 18.jan.2014
 #
 
 # import build_nr
@@ -41,8 +41,9 @@ build_nr=`cat build_nr`
 # --- config 
 name="BlueberryC"
 
-ftproot="ftp://copiino.cc/BlueberryC/"
-ftpuser="master:2w9pnyW1"
+ftproot="ftp://packages.blueberrycontrol.com/BlueberryC/"
+ftpuser=`cat ftp-login.txt`
+echo "login for ftp "$ftpuser
 
 # --- start
 packagedir="./_release/"
@@ -113,9 +114,11 @@ mkdir -p $packagedir
   find ./res/ -iname "*" -print >> $filelist
   find ./screenshots/ -iname "*" -print >> $filelist
   find ./scriptmaster/ -iname "*" -print >> $filelist
+  find ./3rdParty/ -iname "*" -print >> $filelist
+  
 
   # include only default plugins !!
-  find ./plugins/about/ -iname "*" -print >> $filelist
+  find ./plugins/upgrade/ -iname "*" -print >> $filelist
   find ./plugins/controls/ -iname "*" -print >> $filelist
   find ./plugins/home/ -iname "*" -print >> $filelist 
   find ./plugins/missing/ -iname "*" -print >> $filelist
@@ -148,9 +151,14 @@ mkdir -p $packagedir
   find ./  -maxdepth 1 -iname "setup.sh" -print >> $setuplist
   # include the setup-plugins script
   find ./plugins/  -maxdepth 1 -iname "setup_plugins.sh" -print >> $setuplist
-
+  # include server socket
+  find ./BlueberryC-server/ -iname "*" -print >> $setuplist
+  
+  
   # include plugins 
   echo "./plugins/copiino/plugin_setup.tar.gz" >> $setuplist
+  echo "./plugins/rs232terminal/plugin_setup.tar.gz" >> $setuplist
+  
   
   # create the setup archive (thread as root package, thus chane owner to uid=0, gid=0)
   tar -cpzf $setup_package --owner=0 --group=0 -T $setuplist

@@ -32,3 +32,10 @@ shows messages regarding to devices attached to the raspi
 <br>
 shows linux messages /var/log/messages
 </div>
+
+<div id="controls_item">
+<a href="<?php postToMe('syslog'); ?>">syslog</a>
+<br>
+shows linux system messages /var/log/syslog
+</div>
+

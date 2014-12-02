@@ -8,6 +8,7 @@
     include('./lib/diverse.php');
     include('./lib/plugin.php');  
     include('./scriptmaster/scriptmaster.php');
+    include('./lib/js_update.php');
     ?>
 
 <title>

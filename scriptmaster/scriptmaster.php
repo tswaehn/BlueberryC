@@ -39,6 +39,61 @@ function startProcess( $cmd, $pageId, $action='', $opt = array(), $createLog = 1
   
   
 echo '<script type="text/javascript">
+
+//var myVar=setInterval(function(){ajax_call()},1000);
+window.onload=function(){
+  loaded()
+};
+var updateTarget="log";
+var xmlHttp = null;
+try {
+    // Mozilla, Opera, Safari sowie Internet Explorer (ab v7)
+    xmlHttp = new XMLHttpRequest();
+} catch(e) {
+    try {
+        // MS Internet Explorer (ab v6)
+        xmlHttp  = new ActiveXObject("Microsoft.XMLHTTP");
+    } catch(e) {
+        try {
+            // MS Internet Explorer (ab v5)
+            xmlHttp  = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch(e) {
+            xmlHttp  = null;
+        }
+    }
+}
+
+function loaded(){
+
+  document.getElementById(updateTarget).innerHTML="document loaded";
+  ajax_call( updateTarget );
+
+}
+
+function ajax_call() {
+  xmlHttp.open("GET", "./scriptmaster/updateLog.php?app='.getUrlParam("app").$parameter.'", true);
+  xmlHttp.onreadystatechange=function() { onAjaxCallDone();  };
+  xmlHttp.send(null);
+  
+  setTimeout("ajax_call()", 500);
+ 
+  return false;
+}
+
+function onAjaxCallDone(){
+    if (xmlHttp.readyState==4) {
+      if (xmlHttp.status == 200 || xmlHttp.status == 400){
+	document.getElementById(updateTarget).innerHTML=xmlHttp.responseText;
+      } else {
+	//document.getElementById("log").innerHTML="ajax error";
+      }
+    }
+}
+
+</script>';
+
+/*
+'<script type="text/javascript">
 var xmlhttp=false;
 
 //var myVar=setInterval(function(){ajax_call()},1000);
@@ -67,6 +122,7 @@ function ajax_call() {
 	return false;
 }
 </script>';
+*/
 //echo 'params '.$parameter.'<br>';
   
   if ($createLog == '1'){

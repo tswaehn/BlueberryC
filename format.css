@@ -154,4 +154,12 @@ a:hover{
   margin-top:10px;
   margin-bottom:10px;
   min-height:20px;
+  font-family:monospace;
+  
+}
+
+#debug {
+  border:thin solid yellow;
+  padding:5px;
+  
 }

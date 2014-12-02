@@ -6,20 +6,50 @@ class SketchConfig {
   private $iniFile;
   private $config;
   
-  function __construct( $sketch, $isTrash = false ){
-    // fixed folder structure
-    if ($isTrash){
-      $this->iniFile =  PLUGIN_DIR.'trash/'.$sketch.'/sketch.ini';
-    } else {
-      $this->iniFile = PLUGIN_DIR.'sketches/'.$sketch.'/sketch.ini';
-    }
-
-    // remember current sketch name
-    $this->sketch = $sketch;
+  function __construct(){
+  }
   
+  
+  public static function loadByIni( $filename ){
+    
+    $obj = new SketchConfig();
+    
+    $obj->iniFile = $filename;
+    
     // read config from file
-    $this->readConfig();
+    $obj->readConfig();
+    
+    // remember current sketch name
+    $obj->sketch = $obj->getConfig("info", "sketch");
+    
+    return $obj;
+  }
+
   
+  public static function loadFromSketchFolder( $sketch ){
+    $obj= SketchConfig::loadByIni( PLUGIN_DIR.'sketches/'.$sketch.'/sketch.ini' );
+    return $obj;
+  }
+  
+  public static function loadFromTrashFolder( $sketch ){
+    $obj= SketchConfig::loadByIni(  PLUGIN_DIR.'trash/'.$sketch.'/sketch.ini' );
+    return $obj;
+  }
+
+  public static function loadByText( $text ){
+    
+    $obj = new SketchConfig();
+    
+    $obj->iniFile ="";
+    
+    // read config from file
+    $obj->readConfigFromString( $text );
+    
+    // remember current sketch name
+    $obj->sketch = $obj->getConfig("info", "sketch");
+    
+    return $obj;    
+    
   }
   
   function parseConfig(){
@@ -49,11 +79,10 @@ class SketchConfig {
       $this->setConfig('info', 'sketch', $this->sketch );
     }
     
-    // server side MD5 sum
-    if ($this->getConfig('info','MD5-Sum') == ''){
-      $this->setConfig('info','MD5-Sum', '0' );
+    // additional *.cpp files which need to be compiled
+    if ($this->getConfig('cpp','file') == ''){
+      $this->setConfig('cpp', 'file', array() );
     }
-
 
   }
   
@@ -70,6 +99,15 @@ class SketchConfig {
     $this->writeConfig();
 
   }
+  
+  function readConfigFromString($text){
+    
+    $this->config = parse_ini_string( $text, true );
+  
+    $this->parseConfig();
+    //$this->writeConfig();
+  
+  }
 
 
  
@@ -81,10 +119,16 @@ class SketchConfig {
 	foreach ($elem as $key2=>$elem2) { 
 	    if(is_array($elem2)) 
 	    { 
+		/*
+		  note: array can have variouse keys then $i wont iterate
 		for($i=0;$i<count($elem2);$i++) 
 		{ 
 		    $content .= $key2."[] = \"".$elem2[$i]."\"\n"; 
 		} 
+		*/
+		foreach( $elem2 as $elem2key=>$elem2value ){
+		    $content .= $key2."[] = \"".$elem2value."\"\n";
+		}
 	    } 
 	    else if($elem2=="") $content .= $key2." = \n"; 
 	    else $content .= $key2." = \"".$elem2."\"\n"; 
@@ -108,6 +152,10 @@ class SketchConfig {
   function setConfig( $section, $param, $value ){
   
     $this->config[$section][$param]= $value;  
+  }
+  
+  function getFilename(){
+    return $this->iniFile;
   }
 }
 

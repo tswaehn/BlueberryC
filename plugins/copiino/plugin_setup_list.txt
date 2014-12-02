@@ -8,5 +8,8 @@
 ./plugins/copiino/_patch/check-sudo.sh
 ./plugins/copiino/_patch/reset-chip.sh
 ./plugins/copiino/_patch/run-chip.sh
+./plugins/copiino/_patch/enable-rs232.sh
+./plugins/copiino/_patch/disable-rs232.sh
+./plugins/copiino/_patch/copiinod
 ./plugins/copiino/setup_plugin.sh
 ./plugins/copiino/plugin_copiino.tar.gz

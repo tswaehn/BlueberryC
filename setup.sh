@@ -18,12 +18,30 @@ log=/tmp/install-log.txt
 # check last update timestamp
 # stat -c %Y /var/cache/apt/
 
-# update package-list
-  sudo apt-get update
-
 # install apache and php5
-  sudo apt-get install -y apache2 libapache2-mod-php5 php5-curl
+  if [ $(dpkg-query -l | grep -c '^i.* apache2 ') -eq 1 ]
+  then
+    echo "apache2 allready installed"
+  else
+    sudo apt-get update  
+    sudo apt-get install -y apache2
+  fi
 
+  if [ $(dpkg-query -l | grep -c '^i.* libapache2-mod-php5 ') -eq 1 ]
+  then
+    echo "libapache2-mod-php5 allready installed"
+  else
+    sudo apt-get update  
+    sudo apt-get install -y libapache2-mod-php5
+  fi
+  
+  if [ $(dpkg-query -l | grep -c '^i.* php5-curl ') -eq 1 ]
+  then
+    echo "php5-curl allready installed"
+  else
+    sudo apt-get update  
+    sudo apt-get install -y php5-curl
+  fi
 
 # install web-app-center
   echo "--- install BlueberryC "
@@ -36,6 +54,16 @@ log=/tmp/install-log.txt
   sudo tar -xvpf $package -C $install_path >> $log
   # make them available to apache2
   sudo chown www-data.www-data $install_path -R
+  
+  echo "--- install socket"
+  sudo cp BlueberryC-server/blueberryc-server /etc/init.d/
+  sudo cp -R BlueberryC-server /usr/lib/
+
+  ## update startup information
+  sudo update-rc.d blueberryc-server defaults
+
+  ## restart blueberryc-server socket
+  sudo /etc/init.d/blueberryc-server restart
   
 
   # -- add www-data to sudoers - this is neccessary because we

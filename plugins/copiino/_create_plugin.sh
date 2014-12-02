@@ -46,6 +46,10 @@ rm -f $setuplist
   echo $basedir$patch"check-sudo.sh" >> $setuplist  
   echo $basedir$patch"reset-chip.sh" >> $setuplist  
   echo $basedir$patch"run-chip.sh" >> $setuplist
+  echo $basedir$patch"enable-rs232.sh" >> $setuplist
+  echo $basedir$patch"disable-rs232.sh" >> $setuplist
+  
+  echo $basedir$patch"copiinod" >> $setuplist
 
   # finally the default plugin setup script
   echo $basedir"setup_plugin.sh" >> $setuplist

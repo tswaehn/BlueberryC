@@ -1,0 +1,52 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          copiino
+# Required-Start:    apache2
+# Required-Stop:     apache2
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop copiino board
+### END INIT INFO
+
+AUTOSTART_BOARD=1
+AUTOSTART_RS232=1
+
+case "$1" in
+	start)
+		echo -e ${COLOREDSTAR}"Starting copiino ..."
+		
+		/usr/share/arduino/hardware/tools/run-chip.sh
+		sleep 1
+		/usr/share/arduino/hardware/tools/enable-rs232.sh
+		
+		;;
+
+	stop)
+		echo -e ${COLOREDSTAR}"Stopping copiino ..."
+		
+		/usr/share/arduino/hardware/tools/disable-rs232.sh
+		sleep 1
+		/usr/share/arduino/hardware/tools/reset-chip.sh
+		
+		;;
+	
+	restart)
+		$0 stop
+		sleep 1
+		$0 start
+		;;
+
+	status)
+		echo "status not yet implemented"
+		
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit 0
+ 

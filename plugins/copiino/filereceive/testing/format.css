@@ -1,0 +1,28 @@
+
+#sketch {
+  border:thin solid blue;
+  padding:5px;
+  margin:5px;
+  font-size:small;
+  width:200px;
+  float:left;
+}
+
+#history-container {
+  padding-left:10px;
+  font-size:small;
+  width:800px;
+}
+
+#history-sketch {
+  border:thin solid blue;
+  padding:5px;
+  margin-bottom:5px;
+}
+
+#history-sketch-newest {
+  border: thin solid blue;
+  background-color: #f0fff0;
+  padding:5px;
+  margin-bottom:5px;
+}
