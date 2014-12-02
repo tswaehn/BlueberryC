@@ -56,8 +56,8 @@ log=/tmp/install-log.txt
   sudo chown www-data.www-data $install_path -R
   
   echo "--- install socket"
-  sudo cp BlueberryC-server/blueberryc-server /etc/init.d/
-  sudo cp -R BlueberryC-server /usr/lib/
+  sudo cp -f BlueberryC-server/blueberryc-server /etc/init.d/
+  sudo cp -f -R BlueberryC-server /usr/lib/
 
   ## update startup information
   sudo update-rc.d blueberryc-server defaults

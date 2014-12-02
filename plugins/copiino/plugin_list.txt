@@ -13,7 +13,9 @@
 ./plugins/copiino/flashprogrammer/writeDefaultFuses.sh
 ./plugins/copiino/flashprogrammer/prog.php
 ./plugins/copiino/flashprogrammer/filesStorage
-./plugins/copiino/flashprogrammer/filesStorage/blinky.hex
+./plugins/copiino/flashprogrammer/filesStorage/RS232 Sensor Demo.hex
+./plugins/copiino/flashprogrammer/filesStorage/RS232 Cmd Demo.hex
+./plugins/copiino/flashprogrammer/filesStorage/Blinky.hex
 ./plugins/copiino/flashprogrammer/readName.php
 ./plugins/copiino/flashprogrammer/plugme.php
 ./plugins/copiino/flashprogrammer/filesStorage.php
@@ -78,6 +80,7 @@
 ./plugins/copiino/sketches/blinky/build-cli/Blink.o
 ./plugins/copiino/sketches/blinky/build-cli/depends.mk
 ./plugins/copiino/sketches/blinky/build-cli/wiring_analog.o
+./plugins/copiino/sketches/blinky/wiring.jpg
 ./plugins/copiino/sketches/blinky/default_thumbnail.jpg
 ./plugins/copiino/sketches/blinky/makefile
 ./plugins/copiino/sketches/blinky/test.h
@@ -86,4 +89,4 @@
 ./plugins/copiino/sketches/blinky/default.ino
 ./plugins/copiino/sketches/blinky/md5.sum
 ./plugins/copiino/sketches/blinky/thumbnail.png
-./plugins/copiino/sketches/blinky/IMG_0605.JPG
+./plugins/copiino/sketches/blinky/IMG_0612_without_wires_1.JPG
