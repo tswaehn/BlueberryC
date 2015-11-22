@@ -13,7 +13,7 @@
     case 'trash': include( PLUGIN_DIR.'sketchbrowser/trash.php');break;
     
     case 'upload': include( PLUGIN_DIR.'sync/upload.php');break;
-  
+    case 'download': include( PLUGIN_DIR.'sketchbrowser/download.php'); break;
   
     default:
 	    include( PLUGIN_DIR.'sketchbrowser/browse.php');

@@ -159,6 +159,7 @@ class Browser {
     if (defined("DEBUG")){
     $options.= '<a href="'.linkToMe('upload').'&sketch='.$sketch.'">upload</a> ';
     }
+    $options.= '<a href="'.PLUGIN_DIR.'sketchbrowser/download.php?sketch='.$sketch.'">download</a> ';
     
     $options.= '<a href="'.linkToMe('setup').'&sketch='.$sketch.'">setup</a> ';
     $options.= '<a href="'.linkToMe('browse').'&sketch='.$sketch.'&do=del">delete</a> ';

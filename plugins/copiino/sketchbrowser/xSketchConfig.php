@@ -24,7 +24,10 @@ class SketchConfig {
     
     return $obj;
   }
-
+  
+  public static function getSketchFolder( $sketch ){
+      return PLUGIN_DIR.'sketches/'.$sketch.'/';      
+  }
   
   public static function loadFromSketchFolder( $sketch ){
     $obj= SketchConfig::loadByIni( PLUGIN_DIR.'sketches/'.$sketch.'/sketch.ini' );
